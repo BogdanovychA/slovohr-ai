@@ -1,0 +1,48 @@
+[project]
+name = "slovohr-ai"
+version = "0.1.0"
+description = "Slovohr.ai is a project created as part of the beta test for Lapathoniia, the first Ukrainian LLM inference provider."
+readme = "README.md"
+requires-python = ">=3.12"
+authors = [
+    { name = "Andrii Bogdanovych", email = "a@bogdanovych.org" }
+]
+license = "MIT"
+dependencies = [
+    "flet==0.85.1",
+    "flet-storage==1.1.3",
+    "openai==2.37.0",
+    "pydantic-settings==2.14.1",
+]
+
+[dependency-groups]
+dev = [
+    "flet-cli==0.85.1",
+    "flet-desktop==0.85.1",
+    "flet-web==0.85.1",
+    "pre_commit",
+    "black",
+    "isort",
+]
+
+[tool.flet]
+desktop_flavor = "light"    # Change to "full" to use flet-audio and flet-video
+org = "org.foundation101"
+product = "slovohr-ai"
+company = "Personal"
+copyright = "Copyright (c) 2026 Andrii Bogdanovych"
+
+[tool.flet.app]
+path = "src"
+
+[build-system]
+requires = ["setuptools"]
+build-backend = "setuptools.build_meta"
+
+[tool.black]
+line-length = 88
+target-version = ['py312']
+skip-string-normalization = true
+
+[tool.isort]
+profile = "black"
