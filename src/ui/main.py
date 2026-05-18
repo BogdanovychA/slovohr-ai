@@ -28,11 +28,31 @@ async def build_main_view(
 ) -> ft.View:
     """Будує головне вікно"""
 
+    async def _ok() -> None:
+        pass
+
+    async def _rerun() -> None:
+        pass
+
     page.title = root.TITLE
+
+    info_block = ft.Text(
+        f"Модель: {box.l9a.model}",
+        size=style.settings.text_size,
+    )
 
     message_block = ft.Text(
         default_message_text := "Введіть свій запит",
         size=style.settings.text_size,
+    )
+
+    form = ft.TextField(
+        label="Запит",
+        value="",
+        hint_text="Запит до LLM",
+        width=400,
+        bgcolor=style.settings.form_bg_color,
+        border_color=style.settings.form_border_color,
     )
 
     return ft.View(
@@ -41,7 +61,19 @@ async def build_main_view(
         horizontal_alignment=ft.CrossAxisAlignment.CENTER,
         controls=[
             elements.app_bar(root.TITLE, page),
+            info_block,
+            ft.Text(""),
             message_block,
+            ft.Text(""),
+            form,
+            ft.Text(""),
+            ft.Row(
+                buttons_block := [
+                    ft.IconButton(ft.Icons.REFRESH, on_click=_rerun),
+                    ft.IconButton(ft.Icons.DONE_OUTLINE, on_click=_ok),
+                ],
+                alignment=ft.MainAxisAlignment.CENTER,
+            ),
             ft.Text(""),
             ft.Row(
                 controls=[
