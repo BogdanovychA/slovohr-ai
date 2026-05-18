@@ -2,7 +2,7 @@
 
 import logging
 
-import openai
+from openai import AsyncOpenAI, AuthenticationError, RateLimitError
 
 from config import lapathoniia as l9a_config
 from utils import utils
@@ -17,7 +17,7 @@ class Lapathoniia:
 
     def __init__(self, model: str):
 
-        self.client = openai.AsyncOpenAI(
+        self.client = AsyncOpenAI(
             api_key=l9a_config.settings.key, base_url=l9a_config.settings.base_url
         )
 
@@ -46,17 +46,15 @@ class Lapathoniia:
             if text == "":
                 logger.warning("Empty message")
 
-        except openai.AuthenticationError as e:
+        except AuthenticationError as e:
             text = "Некоректний API-ключ. Повідомте розробника."
             logger.warning("AuthenticationError: %s", e)
 
-        except openai.APIStatusError as e:
-            error_msg = str(e)
-            if "budget" in error_msg:
-                text = "Перевищено ліміт звернень до мовної моделі. Спробуйте ще раз пізніше."
-            else:
-                text = "Помилка при зверненні до API. Повідомте розробника."
-            logger.warning("APIStatusError: %s", e)
+        except RateLimitError as e:
+            text = (
+                "Перевищено ліміт звернень до мовної моделі. Спробуйте ще раз пізніше."
+            )
+            logger.warning("RateLimitError: %s", e)
 
         except Exception as e:
             text = "Неочікувана помилка. Повідомте розробника."
