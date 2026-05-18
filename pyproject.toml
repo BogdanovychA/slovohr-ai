@@ -37,6 +37,11 @@ copyright = "Copyright (c) 2026 Andrii Bogdanovych"
 [tool.flet.app]
 path = "src"
 
+[project.urls]
+"Homepage" = "https://www.bogdanovych.org"
+"Repository" = "https://github.com/BogdanovychA/slovohr-ai"
+"Bug Tracker" = "https://github.com/BogdanovychA/slovohr-ai/issues"
+
 [build-system]
 requires = ["setuptools"]
 build-backend = "setuptools.build_meta"
