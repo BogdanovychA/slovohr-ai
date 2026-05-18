@@ -55,11 +55,19 @@ class Lapathoniia:
 if __name__ == "__main__":
     import asyncio
 
+    import yaml
+
+    from config import app
+
+    prompt_file = app.settings.assets_dir / "data" / "prompts.yaml"
+
+    with open(prompt_file, 'r', encoding='utf-8') as f:
+        prompts = yaml.safe_load(f)
+
     async def main():
 
         l9a = Lapathoniia(l9a_config.settings.models["mamay"])
-        print(
-            await l9a.query("Використовуй закарпатський суржик", "Розкажи про Україну")
-        )
+
+        print(await l9a.query(prompts["ukrainka"], "Розкажи про Україну"))
 
     asyncio.run(main())
