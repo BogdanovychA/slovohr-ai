@@ -42,11 +42,17 @@ class Lapathoniia:
             text = message.content.strip() if message.content else ""
 
         except openai.AuthenticationError as e:
-            text = "Не коректний API-ключ"
+            text = "Не коректний API-ключ. Повідомте розробника."
             logger.warning("AuthenticationError in %s: %s", e)
 
+        except openai.RateLimitError as e:
+            text = (
+                "Перевищено ліміт звернень до мовної моделі. Спробуйте ще раз пізніше."
+            )
+            logger.warning("ClientError in %s: %s", str(e))
+
         except Exception as e:
-            text = "Неочікувана помилка"
+            text = "Неочікувана помилка. Повідомте розробника."
             logger.exception("Unexpected error in %s")
 
         return text
