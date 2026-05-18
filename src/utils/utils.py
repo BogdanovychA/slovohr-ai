@@ -1,8 +1,17 @@
 # -*- coding: utf-8 -*-
 
+from __future__ import annotations
+
+from typing import TYPE_CHECKING
+
+if TYPE_CHECKING:
+    from pathlib import Path
+
 import logging
 import time
 from functools import wraps
+
+import yaml
 
 logger = logging.getLogger(__name__)
 
@@ -20,3 +29,20 @@ def api_timer(func):
             logger.info(f"API call to '{func.__name__}' took {duration:.4f} seconds")
 
     return wrapper
+
+
+def read_yaml_file(file: Path) -> dict[str, str]:
+
+    try:
+        with open(file, 'r', encoding='utf-8') as f:
+            data = yaml.safe_load(f)
+
+    except FileNotFoundError as e:
+        data = {}
+        logger.warning("FileNotFoundError: %s", e)
+
+    except Exception as e:
+        data = {}
+        logger.exception("Unexpected error: %s", e)
+
+    return data

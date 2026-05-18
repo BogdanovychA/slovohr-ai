@@ -6,6 +6,7 @@ import logging
 import flet as ft
 from flet_storage import FletStorage
 
+from abstract.prompt_loader import YamlPromptLoader
 from config import app, lapathoniia, server
 from core.lapathoniia import Lapathoniia
 from ui.routes import about, author, error404, root, settings
@@ -88,9 +89,11 @@ async def main(page: ft.Page):
     box = PandorasBox(
         storage=FletStorage(app.settings.name),
         l9a=Lapathoniia(lapathoniia.settings.models["mamay"]),
+        prompt_loader=YamlPromptLoader(
+            app.settings.assets_dir / "data" / "prompts.yaml"
+        ),
     )
 
-    # page.title = "title"
     # await asyncio.sleep(0.2)
 
     page.on_route_change = route_change

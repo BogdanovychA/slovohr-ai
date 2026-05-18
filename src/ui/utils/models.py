@@ -4,6 +4,7 @@ from dataclasses import dataclass
 
 from flet_storage import FletStorage
 
+from abstract.prompt_loader import BasePromptLoader
 from core.lapathoniia import Lapathoniia
 
 
@@ -13,3 +14,4 @@ class PandorasBox:
 
     storage: FletStorage
     l9a: Lapathoniia
+    prompt_loader: BasePromptLoader
