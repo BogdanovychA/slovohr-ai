@@ -41,6 +41,9 @@ class Lapathoniia:
             message = response.choices[0].message
             text = message.content.strip() if message.content else ""
 
+            if text == "":
+                logger.warning("Empty message")
+
         except openai.AuthenticationError as e:
             text = "Не коректний API-ключ. Повідомте розробника."
             logger.warning("AuthenticationError in %s: %s", e)
