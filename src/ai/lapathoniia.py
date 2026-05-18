@@ -5,6 +5,7 @@ import logging
 import openai
 
 from config import lapathoniia as l9a_config
+from utils import utils
 
 logger = logging.getLogger(__name__)
 
@@ -22,6 +23,7 @@ class Lapathoniia:
 
         self.model = model
 
+    @utils.api_timer
     async def query(self, system_prompt: str, user_prompt: str) -> str:
 
         messages = [
@@ -45,22 +47,20 @@ class Lapathoniia:
                 logger.warning("Empty message")
 
         except openai.AuthenticationError as e:
-            text = "Не коректний API-ключ. Повідомте розробника."
-            logger.warning("AuthenticationError in %s: %s", e)
+            text = "Некоректний API-ключ. Повідомте розробника."
+            logger.warning("AuthenticationError: %s", e)
 
         except openai.APIStatusError as e:
             error_msg = str(e)
-
             if "budget" in error_msg:
                 text = "Перевищено ліміт звернень до мовної моделі. Спробуйте ще раз пізніше."
             else:
                 text = "Помилка при зверненні до API. Повідомте розробника."
-
-            logger.warning("ClientError in %s: %s", error_msg)
+            logger.warning("APIStatusError: %s", e)
 
         except Exception as e:
             text = "Неочікувана помилка. Повідомте розробника."
-            logger.exception("Unexpected error in %s")
+            logger.exception("Unexpected error: %s", e)
 
         return text
 
