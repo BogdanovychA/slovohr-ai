@@ -2,7 +2,7 @@
 
 import logging
 
-from openai import AsyncOpenAI
+import openai
 
 from config import lapathoniia as l9a_config
 
@@ -16,7 +16,7 @@ class Lapathoniia:
 
     def __init__(self, model: str):
 
-        self.client = AsyncOpenAI(
+        self.client = openai.AsyncOpenAI(
             api_key=l9a_config.settings.key, base_url=l9a_config.settings.base_url
         )
 
@@ -29,16 +29,25 @@ class Lapathoniia:
             {"role": "user", "content": user_prompt},
         ]
 
-        response = await self.client.chat.completions.create(
-            model=self.model,
-            messages=messages,
-            max_tokens=self.MAX_TOKENS,
-            temperature=self.TEMPERATURE,
-            n=1,
-        )
+        try:
+            response = await self.client.chat.completions.create(
+                model=self.model,
+                messages=messages,
+                max_tokens=self.MAX_TOKENS,
+                temperature=self.TEMPERATURE,
+                n=1,
+            )
 
-        message = response.choices[0].message
-        text = message.content.strip() if message.content else ""
+            message = response.choices[0].message
+            text = message.content.strip() if message.content else ""
+
+        except openai.AuthenticationError as e:
+            text = "Не коректний API-ключ"
+            logger.warning("AuthenticationError in %s: %s", e)
+
+        except Exception as e:
+            text = "Неочікувана помилка"
+            logger.exception("Unexpected error in %s")
 
         return text
 
