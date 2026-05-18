@@ -4,8 +4,8 @@ import asyncio
 
 import flet as ft
 
-from ui.routes import root
-from ui.utils import style
+from flet_app.routes import root
+from flet_app.utils import style
 
 
 def back_button(page, text: str) -> ft.Button:
@@ -20,7 +20,7 @@ def back_button(page, text: str) -> ft.Button:
 def app_bar(title, page) -> ft.AppBar:
     """Створює панель застосунку (AppBar) з вказаним заголовком"""
 
-    from ui.routes import settings
+    from flet_app.routes import settings
 
     return ft.AppBar(
         title=ft.Text(title, size=style.settings.title_size, weight=ft.FontWeight.BOLD),

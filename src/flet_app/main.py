@@ -9,9 +9,9 @@ from flet_storage import FletStorage
 from abstract.prompt_loader import YamlPromptLoader
 from config import app, lapathoniia, server
 from core.lapathoniia import Lapathoniia
-from ui.routes import about, author, error404, root, settings
-from ui.utils import elements, style
-from ui.utils.models import PandorasBox
+from flet_app.routes import about, author, error404, root, settings
+from flet_app.utils import elements, style
+from flet_app.utils.models import PandorasBox
 
 logging.basicConfig(
     level=server.settings.logging_level,

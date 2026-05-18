@@ -5,14 +5,14 @@ from __future__ import annotations
 from typing import TYPE_CHECKING
 
 if TYPE_CHECKING:
-    from ui.utils.models import PandorasBox
+    from flet_app.utils.models import PandorasBox
 
 import asyncio
 
 import flet as ft
 
 from config import app
-from ui.utils import elements, style
+from flet_app.utils import elements, style
 
 ROUTE = app.settings.base_url + "/author"
 TITLE = "Про автора"
