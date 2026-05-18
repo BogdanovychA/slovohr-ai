@@ -48,11 +48,15 @@ class Lapathoniia:
             text = "Не коректний API-ключ. Повідомте розробника."
             logger.warning("AuthenticationError in %s: %s", e)
 
-        except openai.RateLimitError as e:
-            text = (
-                "Перевищено ліміт звернень до мовної моделі. Спробуйте ще раз пізніше."
-            )
-            logger.warning("ClientError in %s: %s", str(e))
+        except openai.APIStatusError as e:
+            error_msg = str(e)
+
+            if "budget" in error_msg:
+                text = "Перевищено ліміт звернень до мовної моделі. Спробуйте ще раз пізніше."
+            else:
+                text = "Помилка при зверненні до API. Повідомте розробника."
+
+            logger.warning("ClientError in %s: %s", error_msg)
 
         except Exception as e:
             text = "Неочікувана помилка. Повідомте розробника."
