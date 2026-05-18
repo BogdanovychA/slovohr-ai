@@ -6,7 +6,7 @@ from config import app
 
 
 class Settings(BaseSettings):
-    '''Налаштування Lapathoniia'''
+    """Налаштування Lapathoniia"""
 
     key: str = ""
     base_url: str = "https://api.lapathoniia.top"
