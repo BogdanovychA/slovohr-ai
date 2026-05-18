@@ -6,8 +6,8 @@ import logging
 import flet as ft
 from flet_storage import FletStorage
 
-from ai.lapathoniia import Lapathoniia
 from config import app, lapathoniia, server
+from core.lapathoniia import Lapathoniia
 from ui.routes import about, author, error404, root, settings
 from ui.utils import elements, style
 from ui.utils.models import PandorasBox

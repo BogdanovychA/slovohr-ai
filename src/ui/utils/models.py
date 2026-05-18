@@ -4,7 +4,7 @@ from dataclasses import dataclass
 
 from flet_storage import FletStorage
 
-from ai.lapathoniia import Lapathoniia
+from core.lapathoniia import Lapathoniia
 
 
 @dataclass
