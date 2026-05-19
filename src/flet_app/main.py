@@ -25,7 +25,7 @@ async def build_main_view(
             ft_utils.set_attr(request_block, "disabled", True)
             ft_utils.set_attr(buttons_block, "disabled", True)
 
-            system_prompt = system_prompts_dict[prompt_switcher.value]
+            system_prompt = box.system_prompts_dict[prompt_switcher.value]
             if request_block.value == "":
                 ft_utils.set_attr(message_block, "value", "Запит не може бути пустим")
                 return
@@ -52,11 +52,10 @@ async def build_main_view(
     )
 
     def _create_prompt_switcher_options() -> list[ft.DropdownOption]:
-        prompts_dict = system_prompts_dict.copy()
+        prompts_dict = box.system_prompts_dict.copy()
         prompts_dict[PromptKey.EMPTY] = "Без системного промпту"
         return [ft.DropdownOption(key=k, text=v) for k, v in prompts_dict.items()]
 
-    system_prompts_dict = box.prompt_loader.load()
     prompt_switcher_option = _create_prompt_switcher_options()
 
     prompt_switcher = ft.Dropdown(
@@ -172,7 +171,9 @@ async def main(page: ft.Page):
         prompt_loader=YamlPromptLoader(
             app.settings.assets_dir / "database" / "prompts.yaml"
         ),
+        system_prompts_dict={},
     )
+    box.system_prompts_dict = box.prompt_loader.load()
 
     # await asyncio.sleep(0.2)
 
