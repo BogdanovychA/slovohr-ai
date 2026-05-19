@@ -10,7 +10,7 @@ from abstract.prompt_loader import YamlPromptLoader
 from config import app, lapathoniia, server
 from core.lapathoniia import Lapathoniia
 from flet_app.routes import about, author, error404, root, settings
-from flet_app.utils import elements, style
+from flet_app.utils import elements, style, utils
 from flet_app.utils.models import PandorasBox
 from models.prompt import PromptKey
 
@@ -30,13 +30,32 @@ async def build_main_view(
     """Будує головне вікно"""
 
     async def _ok() -> None:
-        pass
+
+        try:
+            utils.set_attr(request_block, "disabled", True)
+            utils.set_attr(buttons_block, "disabled", True)
+
+            system_prompt = system_prompts_dict[prompt_switcher.value]
+            if request_block.value == "":
+                utils.set_attr(message_block, "value", "Запит не може бути пустим")
+                return
+
+            utils.set_attr(message_block, "value", "Опрацювання запиту...")
+
+            answer = await box.l9a.query(system_prompt, request_block.value)
+            utils.set_attr(answer_block, "value", answer)
+
+            utils.set_attr(message_block, "value", default_message_text)
+            utils.set_attr(request_block, "value", "")
+
+        finally:
+            utils.set_attr(request_block, "disabled", False)
+            utils.set_attr(buttons_block, "disabled", False)
 
     async def _rerun() -> None:
-        message_block.value = default_message_text
-        request_block.value = ""
-        answer_block.value = ""
-        page.update()
+        utils.set_attr(message_block, "value", default_message_text)
+        utils.set_attr(request_block, "value", "")
+        utils.set_attr(answer_block, "value", "")
 
     page.title = root.TITLE
 
@@ -45,19 +64,19 @@ async def build_main_view(
     )
 
     def _create_prompt_switcher_options() -> list[ft.DropdownOption]:
-        prompts_dict = system_prompts.copy()
+        prompts_dict = system_prompts_dict.copy()
         prompts_dict[PromptKey.EMPTY] = "Без системного промпту"
         return [ft.DropdownOption(key=k, text=v) for k, v in prompts_dict.items()]
 
-    system_prompts = box.prompt_loader.load()
+    system_prompts_dict = box.prompt_loader.load()
     prompt_switcher_option = _create_prompt_switcher_options()
 
     prompt_switcher = ft.Dropdown(
-        label="Системний промпт",
         label_style=ft.TextStyle(size=style.settings.text_size),
-        value=PromptKey.EMPTY,
-        options=prompt_switcher_option,
         width=400,
+        options=prompt_switcher_option,
+        value=PromptKey.EMPTY,
+        label="Системний промпт",
         # on_select=,
     )
 
@@ -106,8 +125,8 @@ async def build_main_view(
             answer_block,
             request_block,
             ft.Text(""),
-            ft.Row(
-                buttons_block := [
+            buttons_block := ft.Row(
+                [
                     ft.IconButton(ft.Icons.REFRESH, on_click=_rerun),
                     ft.IconButton(ft.Icons.DONE_OUTLINE, on_click=_ok),
                 ],
