@@ -78,7 +78,7 @@ async def build_main_view(
     )
 
     message_block = ft.Text(
-        default_message_text := "Введіть свій запит",
+        default_message_text := "Оберіть системний промпт та введіть свій запит",
         size=style.settings.text_size,
     )
 
