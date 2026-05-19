@@ -45,3 +45,7 @@ Slovohr.AI — це мінімалістичний чат-інтерфейс, с
 ## Кастомізація
 
 Ви можете змінити або додати нових персонажів, редагуючи файл `src/assets/database/prompts.yaml`.
+
+## Користуватися
+
+Застосунок працює за адресою: [slovohr-ai.bogdanovych.org](https://slovohr-ai.bogdanovych.org/)
