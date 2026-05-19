@@ -9,7 +9,8 @@ from abstract.prompt_loader import YamlPromptLoader
 from config import app, lapathoniia, server
 from core.lapathoniia import Lapathoniia
 from flet_app.routes import about, author, error404, root, settings
-from flet_app.utils import elements, style, utils
+from flet_app.utils import elements, style
+from flet_app.utils import utils as ft_utils
 from flet_app.utils.models import PandorasBox
 from models.prompt import PromptKey
 
@@ -31,30 +32,30 @@ async def build_main_view(
     async def _ok() -> None:
 
         try:
-            utils.set_attr(request_block, "disabled", True)
-            utils.set_attr(buttons_block, "disabled", True)
+            ft_utils.set_attr(request_block, "disabled", True)
+            ft_utils.set_attr(buttons_block, "disabled", True)
 
             system_prompt = system_prompts_dict[prompt_switcher.value]
             if request_block.value == "":
-                utils.set_attr(message_block, "value", "Запит не може бути пустим")
+                ft_utils.set_attr(message_block, "value", "Запит не може бути пустим")
                 return
 
-            utils.set_attr(message_block, "value", "Опрацювання запиту...")
+            ft_utils.set_attr(message_block, "value", "Опрацювання запиту...")
 
             answer = await box.l9a.query(system_prompt, request_block.value)
-            utils.set_attr(answer_block, "value", answer)
+            ft_utils.set_attr(answer_block, "value", answer)
 
-            utils.set_attr(message_block, "value", default_message_text)
-            utils.set_attr(request_block, "value", "")
+            ft_utils.set_attr(message_block, "value", default_message_text)
+            ft_utils.set_attr(request_block, "value", "")
 
         finally:
-            utils.set_attr(request_block, "disabled", False)
-            utils.set_attr(buttons_block, "disabled", False)
+            ft_utils.set_attr(request_block, "disabled", False)
+            ft_utils.set_attr(buttons_block, "disabled", False)
 
     async def _rerun() -> None:
-        utils.set_attr(message_block, "value", default_message_text)
-        utils.set_attr(request_block, "value", "")
-        utils.set_attr(answer_block, "value", "")
+        ft_utils.set_attr(message_block, "value", default_message_text)
+        ft_utils.set_attr(request_block, "value", "")
+        ft_utils.set_attr(answer_block, "value", "")
 
     model_block = ft.Text(
         f"Модель: {box.l9a.model}, температура: {box.l9a.temperature}, токени: {box.l9a.max_tokens}",
