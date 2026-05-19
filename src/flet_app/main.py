@@ -12,6 +12,7 @@ from core.lapathoniia import Lapathoniia
 from flet_app.routes import about, author, error404, root, settings
 from flet_app.utils import elements, style
 from flet_app.utils.models import PandorasBox
+from models.prompt import PromptKey
 
 logging.basicConfig(
     level=server.settings.logging_level,
@@ -36,9 +37,25 @@ async def build_main_view(
 
     page.title = root.TITLE
 
-    info_block = ft.Text(
+    model_block = ft.Text(
         f"Модель: {box.l9a.model}",
-        size=style.settings.text_size,
+    )
+
+    def _create_prompt_switcher_options() -> list[ft.DropdownOption]:
+        prompts_dict = system_prompts.copy()
+        prompts_dict[PromptKey.EMPTY] = "Без системного промпту"
+        return [ft.DropdownOption(key=k, text=v) for k, v in prompts_dict.items()]
+
+    system_prompts = box.prompt_loader.load()
+    prompt_switcher_option = _create_prompt_switcher_options()
+
+    prompt_switcher = ft.Dropdown(
+        label="Системний промпт",
+        label_style=ft.TextStyle(size=style.settings.text_size),
+        value=PromptKey.EMPTY,
+        options=prompt_switcher_option,
+        width=400,
+        # on_select=,
     )
 
     message_block = ft.Text(
@@ -46,10 +63,25 @@ async def build_main_view(
         size=style.settings.text_size,
     )
 
-    form = ft.TextField(
+    answer_block = ft.TextField(
+        label="Тут буде відповідь",
+        # value="Тут буде відповідь",
+        multiline=True,
+        min_lines=3,
+        max_lines=10,
+        width=400,
+        bgcolor=style.settings.form_bg_color,
+        border_color=style.settings.form_border_color,
+        # disabled=True,
+    )
+
+    request_block = ft.TextField(
         label="Запит",
         value="",
         hint_text="Запит до LLM",
+        multiline=True,
+        min_lines=3,
+        max_lines=10,
         width=400,
         bgcolor=style.settings.form_bg_color,
         border_color=style.settings.form_border_color,
@@ -61,11 +93,15 @@ async def build_main_view(
         horizontal_alignment=ft.CrossAxisAlignment.CENTER,
         controls=[
             elements.app_bar(root.TITLE, page),
-            info_block,
+            ft.Text(""),
+            model_block,
+            ft.Text(""),
+            prompt_switcher,
             ft.Text(""),
             message_block,
             ft.Text(""),
-            form,
+            answer_block,
+            request_block,
             ft.Text(""),
             ft.Row(
                 buttons_block := [
@@ -122,7 +158,7 @@ async def main(page: ft.Page):
         storage=FletStorage(app.settings.name),
         l9a=Lapathoniia(lapathoniia.settings.models["mamay"]),
         prompt_loader=YamlPromptLoader(
-            app.settings.assets_dir / "data" / "prompts.yaml"
+            app.settings.assets_dir / "database" / "prompts.yaml"
         ),
     )
 

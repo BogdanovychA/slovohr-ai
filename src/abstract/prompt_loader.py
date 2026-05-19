@@ -10,6 +10,7 @@ if TYPE_CHECKING:
 from abc import ABC, abstractmethod
 
 from config import app
+from models.prompt import PromptKey, PromptValue
 from utils import utils
 
 
@@ -26,12 +27,12 @@ class YamlPromptLoader(BasePromptLoader):
         self.file_path = file_path
 
     def load(self) -> dict[str, str]:
+
         prompts = utils.read_yaml_file(self.file_path)
-        if not prompts:
-            return {"no_prompt": ""}
-        return prompts
+
+        return {PromptKey.EMPTY: PromptValue.EMPTY, **prompts}
 
 
 if __name__ == "__main__":
-    loader = YamlPromptLoader(app.settings.assets_dir / "data" / "prompts.yaml")
+    loader = YamlPromptLoader(app.settings.assets_dir / "database" / "prompts.yaml")
     print(loader.load())

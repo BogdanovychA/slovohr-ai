@@ -70,7 +70,7 @@ if __name__ == "__main__":
 
     from config import app
 
-    prompt_file = app.settings.assets_dir / "data" / "prompts.yaml"
+    prompt_file = app.settings.assets_dir / "database" / "prompts.yaml"
 
     with open(prompt_file, 'r', encoding='utf-8') as f:
         prompts = yaml.safe_load(f)
