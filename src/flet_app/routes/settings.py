@@ -12,6 +12,7 @@ import flet as ft
 
 from config import app, lapathoniia
 from flet_app.utils import elements, style
+from flet_app.utils import utils as ft_utils
 
 ROUTE = app.settings.base_url + "/settings"
 TITLE = "Налаштування"
@@ -34,6 +35,16 @@ async def build_view(
     def _switch_model():
         box.l9a.model_key = model_switcher.value
 
+    def _change_tokens_block():
+        box.l9a.max_tokens = int(tokens_slider.value)
+        ft_utils.set_attr(tokens_block, "value", f"Токени: {box.l9a.max_tokens}")
+
+    def _change_temperature():
+        box.l9a.temperature = round(float(temperature_slider.value), 1)
+        ft_utils.set_attr(
+            temperature_block, "value", f"Температура: {box.l9a.temperature}"
+        )
+
     model_switcher = ft.Dropdown(
         label_style=ft.TextStyle(size=style.settings.text_size),
         width=400,
@@ -43,6 +54,34 @@ async def build_view(
         value=box.l9a.model_key,
         label="Поточна ШІ модель",
         on_select=_switch_model,
+    )
+
+    temperature_block = ft.Text(
+        f"Температура: {box.l9a.temperature}",
+        size=style.settings.text_size,
+    )
+
+    temperature_slider = ft.Slider(
+        width=400,
+        min=0.5,
+        max=1.0,
+        divisions=5,
+        value=box.l9a.temperature,
+        on_change=_change_temperature,
+    )
+
+    tokens_block = ft.Text(
+        f"Токени: {box.l9a.max_tokens}",
+        size=style.settings.text_size,
+    )
+
+    tokens_slider = ft.Slider(
+        width=400,
+        min=500,
+        max=1000,
+        divisions=5,
+        value=box.l9a.max_tokens,
+        on_change=_change_tokens_block,
     )
 
     page.title = TITLE
@@ -55,6 +94,12 @@ async def build_view(
             elements.app_bar(TITLE, page),
             ft.Text(""),
             model_switcher,
+            ft.Text(""),
+            temperature_block,
+            temperature_slider,
+            ft.Text(""),
+            tokens_block,
+            tokens_slider,
             ft.Text(""),
             elements.back_button(page, "Назад"),
         ],
