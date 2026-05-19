@@ -1,0 +1,12 @@
+cff-version: 1.2.0
+message: "If you use this software, please cite it as below."
+authors:
+  - family-names: "Bogdanovych"
+    given-names: "Andrii"
+    orcid: "https://orcid.org/0009-0006-9045-5675"
+title: "slovohr-ai"
+version: 0.1.0
+date-released: 2026-05-19
+abstract: "Slovohr.AI is a project created as part of the beta test for Lapathoniia, the first Ukrainian LLM inference provider."
+repository-code: "https://github.com/BogdanovychA/slovohr-ai"
+license: MIT
