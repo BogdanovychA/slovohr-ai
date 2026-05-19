@@ -38,8 +38,7 @@ async def build_view(
         label_style=ft.TextStyle(size=style.settings.text_size),
         width=400,
         options=[
-            ft.DropdownOption(key=k, text=v)
-            for k, v in lapathoniia.settings.models.items()
+            ft.DropdownOption(key=k, text=v) for k, v in box.l9a.models_dict.items()
         ],
         value=box.l9a.model_key,
         label="Поточна ШІ модель",

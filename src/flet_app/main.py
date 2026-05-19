@@ -57,7 +57,7 @@ async def build_main_view(
         utils.set_attr(answer_block, "value", "")
 
     model_block = ft.Text(
-        f"Модель: {box.l9a.model}",
+        f"Модель: {box.l9a.model}, температура: {box.l9a.temperature}, токени: {box.l9a.max_tokens}",
     )
 
     def _create_prompt_switcher_options() -> list[ft.DropdownOption]:
@@ -177,7 +177,7 @@ async def main(page: ft.Page):
 
     box = PandorasBox(
         storage=FletStorage(app.settings.name),
-        l9a=Lapathoniia(lapathoniia.settings.models, "mamay"),
+        l9a=Lapathoniia(**lapathoniia.settings.model_dump()),
         prompt_loader=YamlPromptLoader(
             app.settings.assets_dir / "database" / "prompts.yaml"
         ),
