@@ -38,23 +38,20 @@ def build_view(page: ft.Page, box: PandorasBox) -> ft.View:
             ft.Text("Slovohr.AI (Словограй)", size=style.settings.text_size),
             ft.Text(f"Версія: {app.settings.version}"),
             ft.Text(f"Ліцензія: {app.settings.license}"),
-            ft.Text(""),
             ft.Image(
                 src="/images/slovohr-ai_logo.png",
                 width=200,
                 height=200,
             ),
-            ft.Text(""),
             ft.Text(
-                "Проєкт створений в межах бета-тесту Lapathoniia — першого українського LLM інференс-провайдера.",
+                "Мінімалістичний чат-інтерфейс, створений для демонстрації можливостей Lapathoniia",
                 size=style.settings.text_size,
             ),
-            ft.Text(""),
             ft.Text(
                 size=style.settings.text_size,
                 spans=[
                     elements.link(
-                        "Гітхаб",
+                        "Slovohr.AI на Github",
                         "https://github.com/BogdanovychA/slovohr-ai",
                     ),
                 ],
@@ -65,12 +62,15 @@ def build_view(page: ft.Page, box: PandorasBox) -> ft.View:
                 width=200,
                 height=200,
             ),
-            ft.Text(""),
+            ft.Text(
+                "Lapathoniia — перший український LLM інференс провайдер.",
+                size=style.settings.text_size,
+            ),
             ft.Text(
                 size=style.settings.text_size,
                 spans=[
                     elements.link(
-                        "Lapathoniia",
+                        "Сайт Lapathoniia",
                         "https://lapathoniia.top/",
                     ),
                 ],

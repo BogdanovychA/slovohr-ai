@@ -6,7 +6,7 @@
   <img src="src/assets/images/logo.png" width="200" alt="Slovohr.AI Logo">
 </p>
 
-Slovohr.AI — це мінімалістичний чат-інтерфейс, створений для демонстрації можливостей [Lapathoniia](https://lapathoniia.top) — першого українського LLM інференс-провайдера.
+Slovohr.AI — це мінімалістичний чат-інтерфейс, створений для демонстрації можливостей [Lapathoniia](https://lapathoniia.top) — першого українського LLM інференс провайдера.
 
 ## Основні можливості
 
