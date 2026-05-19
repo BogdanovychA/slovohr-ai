@@ -29,10 +29,9 @@ async def build_view(
     page: ft.Page,
     box: PandorasBox,
 ) -> ft.View:
-    """Будує вікно для введення даних про звернення громадянина"""
+    """Будує вікно налаштувань"""
 
     def _switch_model():
-
         box.l9a.model_key = model_switcher.value
 
     model_switcher = ft.Dropdown(
