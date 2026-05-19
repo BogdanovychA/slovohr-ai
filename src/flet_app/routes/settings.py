@@ -10,7 +10,7 @@ if TYPE_CHECKING:
 
 import flet as ft
 
-from config import app
+from config import app, lapathoniia
 from flet_app.utils import elements, style
 
 ROUTE = app.settings.base_url + "/settings"
@@ -31,6 +31,22 @@ async def build_view(
 ) -> ft.View:
     """Будує вікно для введення даних про звернення громадянина"""
 
+    def _switch_model():
+
+        box.l9a.model_key = model_switcher.value
+
+    model_switcher = ft.Dropdown(
+        label_style=ft.TextStyle(size=style.settings.text_size),
+        width=400,
+        options=[
+            ft.DropdownOption(key=k, text=v)
+            for k, v in lapathoniia.settings.models.items()
+        ],
+        value=box.l9a.model_key,
+        label="Поточна ШІ модель",
+        on_select=_switch_model,
+    )
+
     page.title = TITLE
 
     return ft.View(
@@ -40,7 +56,7 @@ async def build_view(
         controls=[
             elements.app_bar(TITLE, page),
             ft.Text(""),
-            ft.Text(TITLE, size=style.settings.text_size),
+            model_switcher,
             ft.Text(""),
             elements.back_button(page, "Назад"),
         ],

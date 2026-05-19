@@ -15,13 +15,31 @@ class Lapathoniia:
     MAX_TOKENS = 1000
     TEMPERATURE = 0.7
 
-    def __init__(self, model: str):
+    def __init__(self, model_dict: dict[str, str], model_key: str):
 
         self.client = AsyncOpenAI(
             api_key=l9a_config.settings.key, base_url=l9a_config.settings.base_url
         )
+        self.model_dict = model_dict
+        self.model_key = model_key
 
-        self.model = model
+    @property
+    def model(self):
+        return self.model_dict[self._model_key]
+
+    @property
+    def model_key(self):
+        return self._model_key
+
+    @model_key.setter
+    def model_key(self, value):
+        self._model_key = value
+
+    @model_key.setter
+    def model_key(self, value: str):
+        if value not in self.model_dict:
+            raise ValueError(f"Model with key '{value}' not found in model_dict.")
+        self._model_key = value
 
     @utils.api_timer
     async def query(self, system_prompt: str, user_prompt: str) -> str:
@@ -77,7 +95,7 @@ if __name__ == "__main__":
 
     async def main():
 
-        l9a = Lapathoniia(l9a_config.settings.models["mamay"])
+        l9a = Lapathoniia(l9a_config.settings.models, "mamay")
 
         print(await l9a.query(prompts["ukrainka"], "Розкажи про Україну"))
 

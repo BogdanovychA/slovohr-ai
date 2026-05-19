@@ -1,8 +1,6 @@
 # -*- coding: utf-8 -*-
 
-import asyncio
 import logging
-import random
 
 import flet as ft
 from flet_storage import FletStorage
@@ -58,8 +56,6 @@ async def build_main_view(
         utils.set_attr(request_block, "value", "")
         utils.set_attr(answer_block, "value", "")
 
-    page.title = root.TITLE
-
     model_block = ft.Text(
         f"Модель: {box.l9a.model}",
     )
@@ -76,8 +72,7 @@ async def build_main_view(
         label_style=ft.TextStyle(size=style.settings.text_size),
         width=400,
         options=prompt_switcher_option,
-        # value=PromptKey.EMPTY,
-        value=random.choice(list(system_prompts_dict.keys())),
+        value=PromptKey.EMPTY,
         label="Системний промпт",
         # on_select=,
     )
@@ -110,6 +105,8 @@ async def build_main_view(
         bgcolor=style.settings.form_bg_color,
         border_color=style.settings.form_border_color,
     )
+
+    page.title = root.TITLE
 
     return ft.View(
         route=root.ROUTE,
@@ -180,7 +177,7 @@ async def main(page: ft.Page):
 
     box = PandorasBox(
         storage=FletStorage(app.settings.name),
-        l9a=Lapathoniia(lapathoniia.settings.models["mamay"]),
+        l9a=Lapathoniia(lapathoniia.settings.models, "mamay"),
         prompt_loader=YamlPromptLoader(
             app.settings.assets_dir / "database" / "prompts.yaml"
         ),
