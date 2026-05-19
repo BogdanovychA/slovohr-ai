@@ -1,0 +1,87 @@
+### Project paths
+#
+# Прокидаємо через volumes для можливості редагувати
+# промпти без перезапуску контейнера:
+/src/assets/database
+#
+/bin/
+/
+
+### Docker
+#
+/Dockerfile
+/docker-compose.yml
+/.dockerignore
+
+### Agents
+/.agents/
+
+### Git & Metadata
+**/.git/
+**/.gitignore
+**/.pre-commit-config.yaml
+
+### Docs & Info (not needed in container)
+/docs/
+/README.md
+/AUTHORS.md
+/LICENSE
+/NOTICE
+/SECURITY.md
+/CONTRIBUTING.md
+/CITATION.cff
+/FUNDING.yml
+/CLAUDE.md
+/GEMINI.md
+/AGENTS.md
+
+### IDEs
+**/.idea/
+**/.vscode/
+
+### Virtual environments
+**/.venv*/
+
+### Environmental variables
+**/.env
+**/.env.*
+
+# OS
+**/*.tmp
+**/*.swp
+**/*.swo
+**/.cache
+**/.DS_Store
+**/Thumbs.db
+**/.thumbnails
+
+### Logs
+**/*.log
+**/logs/
+
+### Python-generated files
+**/__pypackages__/
+**/__pycache__/
+**/*.pyc
+**/*.py[oc]
+**/dist/
+**/wheels/
+**/*.egg-info
+**/build*/
+**/.flet/
+
+### Tests
+**/htmlcov/
+**/.pytest_cache/
+**/.coverage
+**/.tox/
+**/.nox/
+
+# Clouds
+**/.stfolder/
+**/.stversions/
+**/.stignore
+**/.syncthing.*.tmp
+**/~syncthing~*.tmp
+**/*sync-conflict*
+**/*conflicted*

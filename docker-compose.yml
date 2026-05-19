@@ -1,0 +1,17 @@
+name: slovohr-ai
+
+services:
+  slovohr-ai:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: flet_slovohr-ai:${APP_VERSION}
+    pull_policy: missing
+    container_name: flet_slovohr-ai_app
+    restart: always
+    env_file:
+      - src/assets/.env
+    volumes:
+      - ./src/assets/database:/app/src/assets/database
+    ports:
+      - "8009:8000"
