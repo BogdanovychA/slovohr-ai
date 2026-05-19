@@ -33,7 +33,10 @@ async def build_main_view(
         pass
 
     async def _rerun() -> None:
-        pass
+        message_block.value = default_message_text
+        request_block.value = ""
+        answer_block.value = ""
+        page.update()
 
     page.title = root.TITLE
 
@@ -65,7 +68,7 @@ async def build_main_view(
 
     answer_block = ft.TextField(
         label="Тут буде відповідь",
-        # value="Тут буде відповідь",
+        value="",
         multiline=True,
         min_lines=3,
         max_lines=10,
@@ -76,9 +79,9 @@ async def build_main_view(
     )
 
     request_block = ft.TextField(
-        label="Запит",
+        label="Запит до ШІ",
         value="",
-        hint_text="Запит до LLM",
+        hint_text="Запит до Lapathoniia",
         multiline=True,
         min_lines=3,
         max_lines=10,
