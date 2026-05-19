@@ -1,26 +1,16 @@
 # -*- coding: utf-8 -*-
 
-import logging
-
 import flet as ft
 from flet_storage import FletStorage
 
 from abstract.prompt_loader import YamlPromptLoader
-from config import app, lapathoniia, server
+from config import app, lapathoniia
 from core.lapathoniia import Lapathoniia
 from flet_app.routes import about, author, error404, root, settings
 from flet_app.utils import elements, style
 from flet_app.utils import utils as ft_utils
 from flet_app.utils.models import PandorasBox
 from models.prompt import PromptKey
-
-logging.basicConfig(
-    level=server.settings.logging_level,
-    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
-)
-# logging.getLogger("httpx").setLevel(logging.WARNING)
-
-logger = logging.getLogger(__name__)
 
 
 async def build_main_view(
