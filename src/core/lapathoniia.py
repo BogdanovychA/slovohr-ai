@@ -44,10 +44,6 @@ class Lapathoniia:
         return self._model_key
 
     @model_key.setter
-    def model_key(self, value):
-        self._model_key = value
-
-    @model_key.setter
     def model_key(self, value: str):
         if value not in self.models_dict:
             raise ValueError(f"Model with key '{value}' not found in models_dict.")
