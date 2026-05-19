@@ -2,6 +2,7 @@
 
 import asyncio
 import logging
+import random
 
 import flet as ft
 from flet_storage import FletStorage
@@ -75,7 +76,8 @@ async def build_main_view(
         label_style=ft.TextStyle(size=style.settings.text_size),
         width=400,
         options=prompt_switcher_option,
-        value=PromptKey.EMPTY,
+        # value=PromptKey.EMPTY,
+        value=random.choice(list(system_prompts_dict.keys())),
         label="Системний промпт",
         # on_select=,
     )
