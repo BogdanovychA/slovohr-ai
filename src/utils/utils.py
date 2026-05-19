@@ -46,3 +46,16 @@ def read_yaml_file(file: Path) -> dict[str, str]:
         logger.exception("Unexpected error: %s", e)
 
     return data
+
+
+def clamp_value(
+    value: int | float, min_value: int | float | None, max_value: int | float | None
+) -> int | float:
+    """Обмеження значення між min та max.
+    Якщо щось обмежувати не треба -- передаємо None"""
+
+    if min_value is not None:
+        value = max(value, min_value)
+    if max_value is not None:
+        value = min(value, max_value)
+    return value
