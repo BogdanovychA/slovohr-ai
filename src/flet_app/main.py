@@ -20,21 +20,22 @@ async def build_main_view(
 ) -> ft.View:
     """Будує головне вікно"""
 
-    def _get_person_image(key: str | None = None) -> str:
+    def _get_person_image(key: str) -> str:
+        default_image_path = box.person_loader.default_image_path
+        assets_dir = app.settings.assets_dir
 
-        prefix = str(app.settings.assets_dir)
-        default_image_path = str(box.person_loader.default_image_path)
+        raw_path = box.person_images_dict.get(key)
+        image_path = raw_path if raw_path else default_image_path
 
-        if not key:
-            return default_image_path.removeprefix(prefix)
-
-        image_path = str(box.person_images_dict.get(key, default_image_path))
-        return image_path.removeprefix(prefix)
+        if image_path.is_file():
+            return str(image_path.relative_to(assets_dir))
+        else:
+            return str(default_image_path.relative_to(assets_dir))
 
     async def _change_person_picture():
 
         ft_utils.set_attr(
-            person_picture, "src", _get_person_image(prompt_switcher.value)
+            person_picture, "src", _get_person_image(str(prompt_switcher.value))
         )
 
     async def _ok() -> None:
@@ -52,7 +53,7 @@ async def build_main_view(
             ft_utils.set_attr(answer_block, "disabled", True)
 
             base_system_prompt = box.base_system_prompt
-            custom_system_prompt = box.system_prompts_dict[prompt_switcher.value]
+            custom_system_prompt = box.system_prompts_dict[str(prompt_switcher.value)]
             final_system_prompt = f"{base_system_prompt}\n\n{custom_system_prompt}"
 
             answer = await box.l9a.query(final_system_prompt, request_block.value)
@@ -124,7 +125,7 @@ async def build_main_view(
     )
 
     person_picture = ft.Image(
-        src=_get_person_image(prompt_switcher.value),
+        src=_get_person_image(str(prompt_switcher.value)),
         width=200,
         height=200,
     )

@@ -19,13 +19,13 @@ logger = logging.getLogger(__name__)
 class BasePersonLoader(ABC):
 
     @abstractmethod
-    def load_person_image_paths(self) -> dict[str, str]:
+    def load_person_image_paths(self) -> dict[str, Path]:
         """Завантажує картинки персонажей"""
         pass
 
     @property
     @abstractmethod
-    def default_image_path(self):
+    def default_image_path(self) -> Path:
         pass
 
 
@@ -53,7 +53,7 @@ class YamlPersonLoader(BasePersonLoader):
         return result
 
     @property
-    def default_image_path(self):
+    def default_image_path(self) -> Path:
         return self.images_dir / self.default_image_filename
 
 

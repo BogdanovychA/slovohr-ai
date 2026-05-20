@@ -1,5 +1,12 @@
 # -*- coding: utf-8 -*-
 
+from __future__ import annotations
+
+from typing import TYPE_CHECKING
+
+if TYPE_CHECKING:
+    from pathlib import Path
+
 from dataclasses import dataclass
 
 from flet_storage import FletStorage
@@ -16,7 +23,7 @@ class PandorasBox:
     storage: FletStorage
     l9a: Lapathoniia
     prompt_loader: BasePromptLoader
-    system_prompts_dict: dict
+    system_prompts_dict: dict[str, str]
     base_system_prompt: str
     person_loader: BasePersonLoader
-    person_images_dict: dict
+    person_images_dict: dict[str, Path]
