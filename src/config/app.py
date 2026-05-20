@@ -25,7 +25,10 @@ class Settings(BaseSettings):
     base_url: str = ""
 
     assets_dir: Path = get_asset_dir()
+
     env_file: Path = assets_dir / ".env"
+    database_dir: Path = assets_dir / "database"
+    persons_dir: Path = assets_dir / "images" / "persons"
 
     model_config = SettingsConfigDict(
         env_file=env_file,

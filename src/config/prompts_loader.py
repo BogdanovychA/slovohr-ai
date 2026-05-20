@@ -10,7 +10,7 @@ from config import app
 class Settings(BaseSettings):
     """Налаштування завантажувача"""
 
-    prompts_dir: Path = app.settings.assets_dir / "database"
+    prompts_dir: Path = app.settings.database_dir
     system_prompts_filename: str = "system_prompts.yaml"
     base_system_prompt_filename: str = "base_system_prompt.yaml"
 

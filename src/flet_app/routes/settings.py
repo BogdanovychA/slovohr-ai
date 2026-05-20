@@ -10,7 +10,7 @@ if TYPE_CHECKING:
 
 import flet as ft
 
-from config import app, lapathoniia
+from config import app
 from flet_app.utils import elements, style
 from flet_app.utils import utils as ft_utils
 
