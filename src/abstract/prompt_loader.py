@@ -67,9 +67,9 @@ class YamlPromptLoader(BasePromptLoader):
 
 if __name__ == "__main__":
 
-    from config import prompts_loader
+    from config import prompt_loader
 
-    loader = YamlPromptLoader(**prompts_loader.settings.model_dump())
+    loader = YamlPromptLoader(**prompt_loader.settings.model_dump())
 
     print("load_system_prompts:", f"->{loader.load_system_prompts()}<-")
     print("load_base_system_prompt:", f"->{loader.load_base_system_prompt()}<-")

@@ -3,8 +3,9 @@
 import flet as ft
 from flet_storage import FletStorage
 
+from abstract.person_loader import YamlPersonLoader
 from abstract.prompt_loader import YamlPromptLoader
-from config import app, lapathoniia, prompts_loader
+from config import app, lapathoniia, person_loader, prompt_loader
 from core.lapathoniia import Lapathoniia
 from flet_app.routes import about, author, error404, root, settings
 from flet_app.utils import elements, style
@@ -18,6 +19,23 @@ async def build_main_view(
     box: PandorasBox,
 ) -> ft.View:
     """Будує головне вікно"""
+
+    def _get_person_image(key: str | None = None) -> str:
+
+        prefix = str(app.settings.assets_dir)
+        default_image_path = str(box.person_loader.default_image_path)
+
+        if not key:
+            return default_image_path.removeprefix(prefix)
+
+        image_path = str(box.person_images_dict.get(key, default_image_path))
+        return image_path.removeprefix(prefix)
+
+    async def _change_person_picture():
+
+        ft_utils.set_attr(
+            person_picture, "src", _get_person_image(prompt_switcher.value)
+        )
 
     async def _ok() -> None:
 
@@ -72,7 +90,7 @@ async def build_main_view(
         options=prompt_switcher_option,
         value=PromptKey.EMPTY,
         label="Системний промпт",
-        # on_select=,
+        on_select=_change_person_picture,
     )
 
     message_block = ft.Text(
@@ -105,6 +123,12 @@ async def build_main_view(
         border_color=style.settings.form_border_color,
     )
 
+    person_picture = ft.Image(
+        src=_get_person_image(prompt_switcher.value),
+        width=200,
+        height=200,
+    )
+
     page.title = root.TITLE
 
     return ft.View(
@@ -113,7 +137,7 @@ async def build_main_view(
         horizontal_alignment=ft.CrossAxisAlignment.CENTER,
         controls=[
             elements.app_bar(root.TITLE, page),
-            ft.Text(""),
+            person_picture,
             message_block,
             ft.Text(""),
             prompt_switcher,
@@ -172,14 +196,18 @@ async def main(page: ft.Page):
     page.theme_mode = ft.ThemeMode.DARK
     page.route = root.ROUTE
 
+    p4t_l4r = YamlPromptLoader(**prompt_loader.settings.model_dump())
+    p4n_l4r = YamlPersonLoader(**person_loader.settings.model_dump())
+
     box = PandorasBox(
         storage=FletStorage(app.settings.name),
         l9a=Lapathoniia(**lapathoniia.settings.model_dump()),
-        prompt_loader=YamlPromptLoader(**prompts_loader.settings.model_dump()),
-        system_prompts_dict={},
+        prompt_loader=p4t_l4r,
+        system_prompts_dict=p4t_l4r.load_system_prompts(),
+        base_system_prompt=p4t_l4r.load_base_system_prompt(),
+        person_loader=p4n_l4r,
+        person_images_dict=p4n_l4r.load_person_image_paths(),
     )
-    box.system_prompts_dict = box.prompt_loader.load_system_prompts()
-    box.base_system_prompt = box.prompt_loader.load_base_system_prompt()
 
     # await asyncio.sleep(0.2)
 
