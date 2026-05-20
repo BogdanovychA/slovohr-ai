@@ -68,7 +68,7 @@ async def build_main_view(
 
     prompt_switcher = ft.Dropdown(
         label_style=ft.TextStyle(size=style.settings.text_size),
-        width=500,
+        width=400,
         options=prompt_switcher_option,
         value=PromptKey.EMPTY,
         label="Системний промпт",
@@ -87,7 +87,7 @@ async def build_main_view(
         read_only=True,
         min_lines=5,
         max_lines=20,
-        width=500,
+        width=400,
         bgcolor=style.settings.form_bg_color,
         border_color=style.settings.form_border_color,
         disabled=True,
@@ -100,7 +100,7 @@ async def build_main_view(
         multiline=True,
         min_lines=2,
         max_lines=5,
-        width=450,
+        width=400,
         bgcolor=style.settings.form_bg_color,
         border_color=style.settings.form_border_color,
     )
