@@ -4,7 +4,7 @@ import flet as ft
 from flet_storage import FletStorage
 
 from abstract.prompt_loader import YamlPromptLoader
-from config import app, lapathoniia
+from config import app, lapathoniia, prompts_loader
 from core.lapathoniia import Lapathoniia
 from flet_app.routes import about, author, error404, root, settings
 from flet_app.utils import elements, style
@@ -26,15 +26,18 @@ async def build_main_view(
             ft_utils.set_attr(buttons_block, "disabled", True)
             ft_utils.set_attr(prompt_switcher, "disabled", True)
 
-            system_prompt = box.system_prompts_dict[prompt_switcher.value]
             if request_block.value == "":
                 ft_utils.set_attr(message_block, "value", "Запит не може бути пустим")
                 return
 
             ft_utils.set_attr(message_block, "value", "Опрацювання запиту...")
-
             ft_utils.set_attr(answer_block, "disabled", True)
-            answer = await box.l9a.query(system_prompt, request_block.value)
+
+            base_system_prompt = box.base_system_prompt
+            custom_system_prompt = box.system_prompts_dict[prompt_switcher.value]
+            final_system_prompt = f"{base_system_prompt}\n\n{custom_system_prompt}"
+
+            answer = await box.l9a.query(final_system_prompt, request_block.value)
             ft_utils.set_attr(answer_block, "value", answer)
             ft_utils.set_attr(answer_block, "disabled", False)
 
@@ -172,12 +175,11 @@ async def main(page: ft.Page):
     box = PandorasBox(
         storage=FletStorage(app.settings.name),
         l9a=Lapathoniia(**lapathoniia.settings.model_dump()),
-        prompt_loader=YamlPromptLoader(
-            app.settings.assets_dir / "database" / "prompts.yaml"
-        ),
+        prompt_loader=YamlPromptLoader(**prompts_loader.settings.model_dump()),
         system_prompts_dict={},
     )
-    box.system_prompts_dict = box.prompt_loader.load()
+    box.system_prompts_dict = box.prompt_loader.load_system_prompts()
+    box.base_system_prompt = box.prompt_loader.load_base_system_prompt()
 
     # await asyncio.sleep(0.2)
 

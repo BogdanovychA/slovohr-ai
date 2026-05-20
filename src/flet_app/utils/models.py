@@ -16,3 +16,4 @@ class PandorasBox:
     l9a: Lapathoniia
     prompt_loader: BasePromptLoader
     system_prompts_dict: dict
+    base_system_prompt: str = ""

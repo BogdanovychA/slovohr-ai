@@ -97,7 +97,7 @@ if __name__ == "__main__":
     from config import app
     from config import lapathoniia as l9a_config
 
-    prompt_file = app.settings.assets_dir / "database" / "prompts.yaml"
+    prompt_file = app.settings.assets_dir / "database" / "system_prompts.yaml"
 
     with open(prompt_file, 'r', encoding='utf-8') as f:
         prompts = yaml.safe_load(f)
