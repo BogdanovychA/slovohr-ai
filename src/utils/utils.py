@@ -36,6 +36,8 @@ def read_yaml_file(file: Path) -> dict[str, str]:
     try:
         with open(file, 'r', encoding='utf-8') as f:
             data = yaml.safe_load(f)
+        if not isinstance(data, dict):
+            data = {}
 
     except FileNotFoundError as e:
         data = {}
