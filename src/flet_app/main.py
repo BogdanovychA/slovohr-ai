@@ -60,7 +60,7 @@ async def build_main_view(
 
     prompt_switcher = ft.Dropdown(
         label_style=ft.TextStyle(size=style.settings.text_size),
-        width=400,
+        width=500,
         options=prompt_switcher_option,
         value=PromptKey.EMPTY,
         label="Системний промпт",
@@ -73,21 +73,22 @@ async def build_main_view(
     )
 
     answer_block = ft.TextField(
-        label="Тут буде відповідь",
+        label="Тут буде відповідь штучного інтелекту",
         value="",
         multiline=True,
+        read_only=True,
         min_lines=3,
         max_lines=10,
-        width=400,
+        width=500,
         bgcolor=style.settings.form_bg_color,
         border_color=style.settings.form_border_color,
         # disabled=True,
     )
 
     request_block = ft.TextField(
-        label="Запит до ШІ",
+        label="Запит до штучного інтелекту Lapathoniia",
         value="",
-        hint_text="Запит до Lapathoniia",
+        hint_text="Запит до штучного інтелекту Lapathoniia",
         multiline=True,
         min_lines=3,
         max_lines=10,
@@ -105,15 +106,13 @@ async def build_main_view(
         controls=[
             elements.app_bar(root.TITLE, page),
             ft.Text(""),
-            model_block,
-            ft.Text(""),
-            prompt_switcher,
-            ft.Text(""),
             message_block,
             ft.Text(""),
+            prompt_switcher,
             answer_block,
-            request_block,
+            model_block,
             ft.Text(""),
+            request_block,
             buttons_block := ft.Row(
                 [
                     ft.IconButton(ft.Icons.REFRESH, on_click=_rerun),

@@ -47,7 +47,7 @@ async def build_view(
 
     model_switcher = ft.Dropdown(
         label_style=ft.TextStyle(size=style.settings.text_size),
-        width=400,
+        width=350,
         options=[
             ft.DropdownOption(key=k, text=v) for k, v in box.l9a.models_dict.items()
         ],
@@ -62,7 +62,7 @@ async def build_view(
     )
 
     temperature_slider = ft.Slider(
-        width=400,
+        width=350,
         min=0.5,
         max=1.0,
         divisions=5,
@@ -76,7 +76,7 @@ async def build_view(
     )
 
     tokens_slider = ft.Slider(
-        width=400,
+        width=350,
         min=500,
         max=1000,
         divisions=5,

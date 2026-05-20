@@ -1,6 +1,6 @@
 [project]
 name = "slovohr-ai"
-version = "0.1.1"
+version = "0.1.2"
 description = "Slovohr.AI is a project created as part of the beta test for Lapathoniia, the first Ukrainian LLM inference provider."
 readme = "README.md"
 requires-python = ">=3.12"
@@ -28,7 +28,7 @@ dev = [
 ]
 
 [tool.flet]
-desktop_flavor = "light"    # Change to "full" to use flet-audio and flet-video
+desktop_flavor = "light"
 org = "org.foundation101"
 product = "slovohr-ai"
 company = "Personal"
