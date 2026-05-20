@@ -24,6 +24,7 @@ async def build_main_view(
         try:
             ft_utils.set_attr(request_block, "disabled", True)
             ft_utils.set_attr(buttons_block, "disabled", True)
+            ft_utils.set_attr(prompt_switcher, "disabled", True)
 
             system_prompt = box.system_prompts_dict[prompt_switcher.value]
             if request_block.value == "":
@@ -32,8 +33,10 @@ async def build_main_view(
 
             ft_utils.set_attr(message_block, "value", "Опрацювання запиту...")
 
+            ft_utils.set_attr(answer_block, "disabled", True)
             answer = await box.l9a.query(system_prompt, request_block.value)
             ft_utils.set_attr(answer_block, "value", answer)
+            ft_utils.set_attr(answer_block, "disabled", False)
 
             ft_utils.set_attr(message_block, "value", default_message_text)
             ft_utils.set_attr(request_block, "value", "")
@@ -41,11 +44,13 @@ async def build_main_view(
         finally:
             ft_utils.set_attr(request_block, "disabled", False)
             ft_utils.set_attr(buttons_block, "disabled", False)
+            ft_utils.set_attr(prompt_switcher, "disabled", False)
 
     async def _rerun() -> None:
         ft_utils.set_attr(message_block, "value", default_message_text)
         ft_utils.set_attr(request_block, "value", "")
         ft_utils.set_attr(answer_block, "value", "")
+        ft_utils.set_attr(answer_block, "disabled", True)
 
     model_block = ft.Text(
         f"Модель: {box.l9a.model}, температура: {box.l9a.temperature}, токени: {box.l9a.max_tokens}",
@@ -73,26 +78,26 @@ async def build_main_view(
     )
 
     answer_block = ft.TextField(
-        label="Тут буде відповідь штучного інтелекту",
+        label="Відповідь штучного інтелекту",
         value="",
         multiline=True,
         read_only=True,
-        min_lines=3,
-        max_lines=10,
+        min_lines=5,
+        max_lines=20,
         width=500,
         bgcolor=style.settings.form_bg_color,
         border_color=style.settings.form_border_color,
-        # disabled=True,
+        disabled=True,
     )
 
     request_block = ft.TextField(
         label="Запит до штучного інтелекту Lapathoniia",
+        hint_text="Запит до ШІ",
         value="",
-        hint_text="Запит до штучного інтелекту Lapathoniia",
         multiline=True,
-        min_lines=3,
-        max_lines=10,
-        width=400,
+        min_lines=2,
+        max_lines=5,
+        width=450,
         bgcolor=style.settings.form_bg_color,
         border_color=style.settings.form_border_color,
     )
