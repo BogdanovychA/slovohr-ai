@@ -11,7 +11,7 @@ logging.basicConfig(
     level=server.settings.logging_level,
     format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
 )
-# logging.getLogger("httpx").setLevel(logging.WARNING)
+logging.getLogger("httpx").setLevel(logging.WARNING)
 
 logger = logging.getLogger(__name__)
 

@@ -37,6 +37,7 @@ async def build_main_view(
         ft_utils.set_attr(
             person_picture, "src", _get_person_image(str(prompt_switcher.value))
         )
+        await _rerun()
 
     async def _ok() -> None:
 
