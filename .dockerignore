@@ -1,11 +1,7 @@
 ### Project paths
 #
-# Прокидаємо через volumes для можливості редагувати
-# промпти без перезапуску контейнера:
-/src/assets/database
-#
+
 /bin/
-/
 
 ### Docker
 #
@@ -14,8 +10,8 @@
 /.dockerignore
 
 ### Agents
-/.agents/
-/.antigravitycli/
+.agents/
+.antigravitycli/
 
 ### Git & Metadata
 **/.git/

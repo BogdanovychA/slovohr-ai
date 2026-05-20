@@ -13,5 +13,6 @@ services:
       - src/assets/.env
     volumes:
       - ./src/assets/database:/app/src/assets/database
+      - ./src/assets/images/persons:/app/src/assets/images/persons
     ports:
       - "8009:8000"
