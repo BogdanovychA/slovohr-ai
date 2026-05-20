@@ -2,6 +2,7 @@
 
 ### Agents
 .agents/
+.antigravitycli/
 
 # OS
 *.tmp
