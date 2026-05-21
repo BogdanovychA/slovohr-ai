@@ -3,15 +3,15 @@
 import flet as ft
 from flet_storage import FletStorage
 
-from abstract.person_loader import YamlPersonLoader
-from abstract.prompt_loader import YamlPromptLoader
-from config import app, lapathoniia, person_loader, prompt_loader
+from abstract.character_loader import CharacterLoader
+from abstract.global_prompt_loader import GlobalPromptLoader
+from config import app, lapathoniia
 from core.lapathoniia import Lapathoniia
 from flet_app.routes import about, author, error404, root, settings
 from flet_app.utils import elements, style
 from flet_app.utils import utils as ft_utils
 from flet_app.utils.models import PandorasBox
-from models.prompt import PromptKey
+from models.character import CharacterDictKey
 
 
 async def build_main_view(
@@ -21,10 +21,12 @@ async def build_main_view(
     """Будує головне вікно"""
 
     def _get_person_image(key: str) -> str:
-        default_image_path = box.person_loader.default_image_path
+        default_image_path = box.characters_dict[
+            CharacterDictKey.DEFAULT
+        ].image_filepath
         assets_dir = app.settings.assets_dir
 
-        raw_path = box.person_images_dict.get(key)
+        raw_path = box.characters_dict[key].image_filepath
         image_path = raw_path if raw_path else default_image_path
 
         if image_path.is_file():
@@ -53,9 +55,10 @@ async def build_main_view(
             ft_utils.set_attr(message_block, "value", "Опрацювання запиту...")
             ft_utils.set_attr(answer_block, "disabled", True)
 
-            base_system_prompt = box.base_system_prompt
-            custom_system_prompt = box.system_prompts_dict[str(prompt_switcher.value)]
-            final_system_prompt = f"{base_system_prompt}\n\n{custom_system_prompt}"
+            custom_system_prompt = box.characters_dict[
+                str(prompt_switcher.value)
+            ].prompt
+            final_system_prompt = f"{box.global_prompt}\n\n{custom_system_prompt}"
 
             answer = await box.l9a.query(final_system_prompt, request_block.value)
             ft_utils.set_attr(answer_block, "value", answer)
@@ -80,9 +83,10 @@ async def build_main_view(
     )
 
     def _create_prompt_switcher_options() -> list[ft.DropdownOption]:
-        prompts_dict = box.system_prompts_dict.copy()
-        prompts_dict[PromptKey.EMPTY] = "Без системного промпту"
-        return [ft.DropdownOption(key=k, text=v) for k, v in prompts_dict.items()]
+        return [
+            ft.DropdownOption(key=k, text=v.name)
+            for k, v in box.characters_dict.items()
+        ]
 
     prompt_switcher_option = _create_prompt_switcher_options()
 
@@ -90,18 +94,18 @@ async def build_main_view(
         label_style=ft.TextStyle(size=style.settings.text_size),
         width=400,
         options=prompt_switcher_option,
-        value=PromptKey.EMPTY,
-        label="Системний промпт",
+        value=CharacterDictKey.DEFAULT,
+        label="Персонаж",
         on_select=_change_person_picture,
     )
 
     message_block = ft.Text(
-        default_message_text := "Оберіть системний промпт та введіть свій запит",
+        default_message_text := "Оберіть персонажа та введіть свій запит",
         size=style.settings.text_size,
     )
 
     answer_block = ft.TextField(
-        label="Відповідь штучного інтелекту",
+        label="Відповідь персонажа",
         value="",
         multiline=True,
         read_only=True,
@@ -114,8 +118,8 @@ async def build_main_view(
     )
 
     request_block = ft.TextField(
-        label="Запит до штучного інтелекту Lapathoniia",
-        hint_text="Запит до ШІ",
+        label="Запит до ШІ Lapathoniia",
+        hint_text="Запит до персонажа",
         value="",
         multiline=True,
         min_lines=2,
@@ -198,17 +202,14 @@ async def main(page: ft.Page):
     page.theme_mode = ft.ThemeMode.DARK
     page.route = root.ROUTE
 
-    p4t_l4r = YamlPromptLoader(**prompt_loader.settings.model_dump())
-    p4n_l4r = YamlPersonLoader(**person_loader.settings.model_dump())
+    character_loader = CharacterLoader()
+    global_prompt_loader = GlobalPromptLoader()
 
     box = PandorasBox(
         storage=FletStorage(app.settings.name),
         l9a=Lapathoniia(**lapathoniia.settings.model_dump()),
-        prompt_loader=p4t_l4r,
-        system_prompts_dict=p4t_l4r.load_system_prompts(),
-        base_system_prompt=p4t_l4r.load_base_system_prompt(),
-        person_loader=p4n_l4r,
-        person_images_dict=p4n_l4r.load_person_image_paths(),
+        characters_dict=character_loader.create_dict(),
+        global_prompt=global_prompt_loader.get_prompt(),
     )
 
     # await asyncio.sleep(0.2)

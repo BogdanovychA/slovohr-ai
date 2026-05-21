@@ -87,25 +87,3 @@ class Lapathoniia:
             logger.exception("Unexpected error: %s", e)
 
         return text
-
-
-if __name__ == "__main__":
-    import asyncio
-
-    import yaml
-
-    from config import app
-    from config import lapathoniia as l9a_config
-
-    prompt_file = app.settings.assets_dir / "database" / "system_prompts.yaml"
-
-    with open(prompt_file, 'r', encoding='utf-8') as f:
-        prompts = yaml.safe_load(f)
-
-    async def main():
-
-        l9a = Lapathoniia(**l9a_config.settings.model_dump())
-
-        print(await l9a.query(prompts["ukrainka"], "Розкажи про Україну"))
-
-    asyncio.run(main())

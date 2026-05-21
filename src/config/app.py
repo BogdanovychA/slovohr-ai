@@ -28,6 +28,14 @@ class Settings(BaseSettings):
 
     env_file: Path = assets_dir / ".env"
     database_dir: Path = assets_dir / "database"
+    images_dir: Path = assets_dir / "images" / "characters"
+
+    characters_filename: str = "characters.yaml"
+    global_prompt_filename: str = "global_prompt.yaml"
+
+    default_character_image_filename: str = "slovohr-ai.png"
+    default_character_name: str = "Словограй"
+    default_character_prompt: str = ""
 
     model_config = SettingsConfigDict(
         env_file=env_file,
