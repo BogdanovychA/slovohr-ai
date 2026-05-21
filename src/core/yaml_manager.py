@@ -32,7 +32,6 @@ class CharacterYamlManager:
         result = {}
 
         for key, value in raw_dict.items():
-
             is_filename = CharacterKey.IMAGE in value
             is_name = CharacterKey.NAME in value
             is_prompt = CharacterKey.PROMPT in value

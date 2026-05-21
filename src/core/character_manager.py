@@ -45,7 +45,6 @@ class CharacterManager:
         }
 
         for key, value in self.characters_dict.items():
-
             character = Character(
                 image_filepath=self.images_dir / value[CharacterKey.IMAGE],
                 name=value[CharacterKey.NAME],
