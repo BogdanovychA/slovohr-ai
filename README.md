@@ -1,31 +1,58 @@
 # Slovohr.AI (Словограй)
 
-![Made in Ukraine](https://img.shields.io/badge/Made%20in-Ukraine-blue?logo=data%3Aimage%2Fsvg%2Bxml%3Bbase64%2CPHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMjAwIiBoZWlnaHQ9IjgwMCI%2BCjxyZWN0IHdpZHRoPSIxMjAwIiBoZWlnaHQ9IjgwMCIgZmlsbD0iIzAwNTdCNyIvPgo8cmVjdCB3aWR0aD0iMTIwMCIgaGVpZ2h0PSI0MDAiIHk9IjQwMCIgZmlsbD0iI0ZGRDcwMCIvPgo8L3N2Zz4%3D) ![GitHub License](https://img.shields.io/github/license/BogdanovychA/slovohr-ai?labelColor=gray&color=blue)
+![Made in Ukraine](https://img.shields.io/badge/Made%20in-Ukraine-blue?logo=data%3Aimage%2Fsvg%2Bxml%3Bbase64,%2CPHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMjAwIiBoZWlnaHQ9IjgwMCI%2BCjxyZWN0IHdpZHRoPSIxMjAwIiBoZWlnaHQ9IjgwMCIgZmlsbD0iIzAwNTdCNyIvPgo8cmVjdCB3aWR0aD0iMTIwMCIgaGVpZ2h0PSI0MDAiIHk9IjQwMCIgZmlsbD0iI0ZGRDcwMCIvPgo8L3N2Zz4%3D) ![GitHub License](https://img.shields.io/github/license/BogdanovychA/slovohr-ai?labelColor=gray&color=blue)
 
 <p align="center">
   <img src="src/assets/images/logo.png" width="200" alt="Slovohr.AI Logo">
 </p>
 
-Slovohr.AI — це мінімалістичний чат-інтерфейс, створений для демонстрації можливостей [Lapathoniia](https://lapathoniia.top) — першого українського LLM інференс провайдера.
+**Slovohr.AI (Словограй)** — це інтерактивний чат-інтерфейс, розроблений для демонстрації можливостей [Lapathoniia](https://lapathoniia.top) — першого україномовного LLM інференс провайдера.
+
+Проєкт дозволяє спілкуватися з віртуальними історичними та вигаданими персонажами, чиї образи детально налаштовуються за допомогою системних промптів.
+
+---
 
 ## Основні можливості
 
-- **Україноцентричність**: Підтримка моделей Mamay та Lapa, оптимізованих для української мови.
-- **Персонажі**: Спілкування з віртуальними образами (Т. Шевченко, Леся Українка та інші) через налаштовувані промпти.
-- **Кросплатформеність**: Побудовано на Flet (Flutter for Python), що забезпечує швидкий та адаптивний інтерфейс.
+- **Україноцентричність**: Повна сумісність із україномовними моделями `Mamay` та `Lapa`, що оптимізовані для роботи з українською культурою, мовою та контекстом.
+- **Інтерактивні персонажі**: Спілкування з відомими постатями (Тарас Шевченко, Леся Українка, колоритний Карпатський Гуцул, Вчителька української мови тощо).
+- **Динамічна кастомізація**: Швидке додавання нових персонажів, налаштування їхніх системних інструкцій та візуальних аватарів через YAML-конфігурації без потреби переписувати код.
+- **Гнучке керування ШІ**: Вбудована панель налаштувань дозволяє обирати модель, регулювати температуру (креативність відповідей) та обмежувати максимальну кількість токенів.
+- **Кросплатформеність**: Побудовано на базі фреймворку Flet (Flutter для Python), що забезпечує швидку роботу інтерфейсу як у веб-версії, так і на десктопі, з адаптивною темною темою.
+
+---
+
+## Технологічний стек
+
+- **Core**: Python 3.12+
+- **UI фреймворк**: Flet (Flutter-based)
+- **Управління даними & Валідація**: Pydantic v2 та Pydantic Settings
+- **Спілкування з ШІ**: Офіційний асинхронний клієнт `openai` (AsyncOpenAI)
+- **Конфігурації**: PyYAML
+- **Оточення та запуск**: `uv` для швидкого керування залежностями та віртуальним оточенням
+
+---
 
 ## Налаштування змінних середовища
 
 Проєкт використовує два типи конфігураційних файлів:
 
-1.  **Конфігурація застосунку**: Створіть файл `src/assets/.env` на основі `src/assets/.env.example` та додайте ваш `LAPATHONIIA__API_KEY`.
-2.  **Конфігурація Docker** (лише для Docker): Створіть файл `.env` у корені проєкту на основі `.env.example` та вкажіть `APP_VERSION`.
+1. **Конфігурація застосунку**: Створіть файл `src/assets/.env` на основі `src/assets/.env.example` та додайте ваш API-ключ:
+   ```env
+   LAPATHONIIA__API_KEY=ваш_api_ключ_від_lapathoniia
+   ```
+2. **Конфігурація Docker**: Створіть файл `.env` у корені проєкту на основі `.env.example` та вкажіть версію:
+   ```env
+   APP_VERSION=0.2.0
+   ```
 
-## Запуск
+---
+
+## Інструкція із запуску
 
 ### Локально (через `uv`)
 
-1. Встановіть залежності:
+1. Встановіть інструмент `uv` (якщо його немає) та синхронізуйте залежності:
    ```bash
    uv sync
    ```
@@ -37,20 +64,33 @@ Slovohr.AI — це мінімалістичний чат-інтерфейс, с
 
 ### Через Docker
 
-1. Запустіть контейнер:
+1. Запустіть контейнер за допомогою Docker Compose:
    ```bash
    docker compose up -d
    ```
 
-Застосунок буде доступний за адресою `http://localhost:8009`.
+Застосунок автоматично запуститься та буде доступний у вашому браузері за адресою: `http://localhost:8009`.
 
-## Кастомізація
+---
 
-Ви можете налаштувати поведінку та вигляд персонажів через файли в `src/assets/database/`:
-- `system_prompts.yaml` — опис ролей (системних промптів) персонажів.
-- `persons.yaml` — прив'язка файлів зображень (з папки `src/assets/images/persons/`) до персонажів.
-- `base_system_prompt.yaml` — базові правила ШІ для всіх запитів.
+## Розширення та кастомізація
 
-## Користуватися
+Ви можете легко додавати нових персонажів або редагувати існуючих у каталозі `src/assets/database/`:
 
-Застосунок працює за адресою: [slovohr-ai.bogdanovych.org](https://slovohr-ai.bogdanovych.org/)
+1. **Додавання образу** у [characters.yaml](src/assets/database/characters.yaml):
+   ```yaml
+   unikalny_key:
+     image_filename: "filename.png"        # Назва картинки у src/assets/images/characters/
+     name: "Ім'я для відображення в Dropdown"
+     prompt: |
+       Текст системної інструкції, яка визначає поведінку, стиль мовлення,
+       роль та характерні риси персонажа.
+   ```
+2. **Глобальні обмеження** у [global_prompt.yaml](src/assets/database/global_prompt.yaml):
+   Містить загальні системні правила для всіх персонажів (наприклад, мова спілкування, стиль форматування відповідей, обмеження на емодзі тощо).
+
+---
+
+## Онлайн-версія
+
+Спробувати роботу застосунку можна на живому демо: [slovohr-ai.bogdanovych.org](https://slovohr-ai.bogdanovych.org/)
