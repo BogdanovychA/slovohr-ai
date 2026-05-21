@@ -1,13 +1,33 @@
 [project]
 name = "slovohr-ai"
 version = "0.2.0"
-description = "Slovohr.AI is a project created as part of the beta test for Lapathoniia, the first Ukrainian LLM inference provider."
+description = "Slovohr.AI (Словограй) is an interactive Flet-based chat interface featuring configurable historical and fictional Ukrainian characters powered by Lapathoniia LLM provider."
 readme = "README.md"
 requires-python = ">=3.12"
 authors = [
     { name = "Andrii Bogdanovych", email = "a@bogdanovych.org" }
 ]
 license = "MIT"
+keywords = [
+    "flet",
+    "flutter",
+    "lapathoniia",
+    "llm",
+    "ukrainian",
+    "chat",
+    "chatbot",
+    "mamay",
+    "lapa",
+]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Developers",
+    "Intended Audience :: End Users/Desktop",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Scientific/Engineering :: Artificial Intelligence",
+    "Topic :: Software Development :: User Interfaces",
+]
 dependencies = [
     "flet==0.85.1",
     "flet-storage==1.1.3",
