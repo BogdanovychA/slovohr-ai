@@ -17,8 +17,11 @@ logger = logging.getLogger(__name__)
 
 
 def api_timer(func):
+    """Декоратор для вимірювання часу виконання асинхронних викликів API."""
+
     @wraps(func)
     async def wrapper(*args, **kwargs):
+        """Обертка для вимірювання та логування тривалості виконання функції."""
         start_time = time.perf_counter()
         try:
             result = await func(*args, **kwargs)
@@ -32,6 +35,7 @@ def api_timer(func):
 
 
 def read_yaml_file(file: Path) -> dict[str, str]:
+    """Безпечно зчитує YAML-файл та повертає його вміст як словник."""
 
     try:
         with open(file, 'r', encoding='utf-8') as f:

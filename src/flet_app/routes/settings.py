@@ -33,13 +33,16 @@ async def build_view(
     """Будує вікно налаштувань"""
 
     def _switch_model():
+        """Оновлює ключ використовуваної моделі в налаштуваннях."""
         box.l9a.model_key = model_switcher.value
 
     def _change_tokens_block():
+        """Оновлює ліміт максимальної кількості токенів у налаштуваннях та інтерфейсі."""
         box.l9a.max_tokens = int(tokens_slider.value)
         ft_utils.set_attr(tokens_block, "value", f"Токени: {box.l9a.max_tokens}")
 
     def _change_temperature():
+        """Оновлює параметр температури (креативності) моделі в налаштуваннях та інтерфейсі."""
         box.l9a.temperature = round(float(temperature_slider.value), 1)
         ft_utils.set_attr(
             temperature_block, "value", f"Температура: {box.l9a.temperature}"

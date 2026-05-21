@@ -16,12 +16,16 @@ logger = logging.getLogger(__name__)
 
 
 class CharacterYamlManager:
+    """Менеджер для зчитування конфігурацій персонажів з YAML-файлу."""
+
     def __init__(self, database_dir: Path, filename: str) -> None:
+        """Ініціалізація шляху до файлу конфігурації персонажів."""
 
         self.database_dir = database_dir
         self.filename = filename
 
     def create_dict(self) -> dict[str, dict[CharacterKey, str]]:
+        """Зчитує YAML-файл та фільтрує лише валідні записи персонажів."""
 
         raw_dict = utils.read_yaml_file(self.database_dir / self.filename)
 
@@ -40,12 +44,16 @@ class CharacterYamlManager:
 
 
 class GlobalPromptYamlManager:
+    """Менеджер для роботи з глобальним системним промптом з YAML-файлу."""
+
     def __init__(self, database_dir: Path, filename: str) -> None:
+        """Ініціалізація шляху до файлу глобального промпту."""
 
         self.database_dir = database_dir
         self.filename = filename
 
     def get_prompt(self) -> str:
+        """Повертає глобальний промпт, зчитаний з конфігураційного файлу."""
 
         try:
             raw_list = utils.read_yaml_file(self.database_dir / self.filename)

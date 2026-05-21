@@ -16,6 +16,8 @@ logger = logging.getLogger(__name__)
 
 
 class CharacterManager:
+    """Менеджер для створення та управління об'єктами персонажів."""
+
     def __init__(
         self,
         default_character_image_filename: str,
@@ -24,6 +26,7 @@ class CharacterManager:
         images_dir: Path,
         characters_dict: dict[str, dict[CharacterKey, str]],
     ) -> None:
+        """Ініціалізує менеджер персонажів та створює дефолтного персонажа."""
 
         self.images_dir = images_dir
         self.characters_dict = characters_dict
@@ -35,6 +38,7 @@ class CharacterManager:
         )
 
     def create_dict(self) -> dict[CharacterDictKey | str, Character]:
+        """Будує та повертає словник персонажів із валідованими даними."""
 
         result: dict[CharacterDictKey | str, Character] = {
             CharacterDictKey.DEFAULT: self.default_character,

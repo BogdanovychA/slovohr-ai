@@ -21,6 +21,7 @@ async def build_main_view(
     """Будує головне вікно"""
 
     def _get_person_image(key: str) -> str:
+        """Повертає відносний шлях до зображення (аватара) персонажа."""
         default_image_path = box.characters_dict[
             CharacterDictKey.DEFAULT
         ].image_filepath
@@ -35,6 +36,7 @@ async def build_main_view(
             return str(default_image_path.relative_to(assets_dir))
 
     async def _change_person_picture():
+        """Оновлює зображення персонажа на формі відповідно до вибору."""
 
         ft_utils.set_attr(
             person_picture, "src", _get_person_image(str(prompt_switcher.value))
@@ -42,6 +44,7 @@ async def build_main_view(
         await _rerun()
 
     async def _ok() -> None:
+        """Опрацьовує надсилання текстового запиту користувача до обраного персонажа."""
 
         try:
             ft_utils.set_attr(request_block, "disabled", True)
@@ -73,6 +76,7 @@ async def build_main_view(
             ft_utils.set_attr(prompt_switcher, "disabled", False)
 
     async def _rerun() -> None:
+        """Очищує текстове поле відповіді та скидає стан діалогу."""
         ft_utils.set_attr(message_block, "value", default_message_text)
         ft_utils.set_attr(request_block, "value", "")
         ft_utils.set_attr(answer_block, "value", "")
@@ -83,6 +87,7 @@ async def build_main_view(
     )
 
     def _create_prompt_switcher_options() -> list[ft.DropdownOption]:
+        """Формує список персонажів для випадаючого меню."""
         return [
             ft.DropdownOption(key=k, text=v.name)
             for k, v in box.characters_dict.items()
