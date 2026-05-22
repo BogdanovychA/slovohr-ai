@@ -5,13 +5,20 @@ from flet_storage import FletStorage
 
 from abstract.character_loader import CharacterLoader
 from abstract.global_prompt_loader import GlobalPromptLoader
-from config import app, lapathoniia
+from config import app, lapathoniia, measurement_api as m9t_config
 from core.lapathoniia import Lapathoniia
 from flet_app.routes import about, author, error404, root, settings
 from flet_app.utils import elements, style
 from flet_app.utils import utils as ft_utils
 from flet_app.utils.models import PandorasBox
 from models.character import CharacterDictKey
+from models.logging import Analytics
+from measurement_api import MeasurementAPI
+import uuid
+import logging
+import asyncio
+
+logger = logging.getLogger(__name__)
 
 
 async def build_main_view(
@@ -64,6 +71,17 @@ async def build_main_view(
             final_system_prompt = f"{box.global_prompt}\n\n{custom_system_prompt}"
 
             answer = await box.l9a.query(final_system_prompt, request_block.value)
+
+            await box.m9t.log_event(
+                box.client_id,
+                Analytics.QUERY_SENT,
+                character=str(prompt_switcher.value),
+                model=box.l9a.model_key,
+                max_tokens=box.l9a.max_tokens,
+                temperature=box.l9a.temperature,
+                platform=str(page.platform.value),
+            )
+
             ft_utils.set_attr(answer_block, "value", answer)
             ft_utils.set_attr(answer_block, "disabled", False)
 
@@ -181,6 +199,13 @@ async def main(page: ft.Page):
     async def route_change():
         """Обробляє зміну маршруту сторінки"""
 
+        await box.m9t.log_event(
+            box.client_id,
+            Analytics.ROUTE_CHANGE,
+            page_path=page.route,
+            platform=str(page.platform.value),
+        )
+
         page.views.clear()
         page.views.append(await build_main_view(page, box))
 
@@ -215,9 +240,23 @@ async def main(page: ft.Page):
         l9a=Lapathoniia(**lapathoniia.settings.model_dump()),
         characters_dict=character_loader.create_dict(),
         global_prompt=global_prompt_loader.get_prompt(),
+        m9t=MeasurementAPI(
+            m10t_id=m9t_config.settings.id,
+            secret_key=m9t_config.settings.secret_key,
+            debug=m9t_config.settings.debug,
+        ),
+        client_id="",
     )
 
-    # await asyncio.sleep(0.2)
+    await asyncio.sleep(0.2)
+
+    try:
+        box.client_id = await box.storage.get_or_default("client_id", str(uuid.uuid4()))
+        if not await box.storage.contains_key("client_id"):
+            await box.storage.set("client_id", box.client_id)
+    except RuntimeError:
+        logger.exception("Error reading client_id data")
+        box.client_id = str(uuid.uuid4())
 
     page.on_route_change = route_change
     page.on_view_pop = view_pop

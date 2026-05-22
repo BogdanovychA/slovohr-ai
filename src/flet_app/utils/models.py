@@ -8,6 +8,7 @@ if TYPE_CHECKING:
     from models.character import Character, CharacterDictKey
     from core.lapathoniia import Lapathoniia
     from flet_storage import FletStorage
+    from measurement_api import MeasurementAPI
 
 from dataclasses import dataclass
 
@@ -20,3 +21,5 @@ class PandorasBox:
     l9a: Lapathoniia
     characters_dict: dict[CharacterDictKey | str, Character]
     global_prompt: str
+    m9t: MeasurementAPI
+    client_id: str

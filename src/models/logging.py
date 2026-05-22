@@ -11,3 +11,8 @@ class LoggingLevel(StrEnum):
     WARNING = "WARNING"
     ERROR = "ERROR"
     CRITICAL = "CRITICAL"
+
+
+class Analytics(StrEnum):
+    ROUTE_CHANGE = "route_change"
+    QUERY_SENT = "query_sent"
