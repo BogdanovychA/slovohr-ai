@@ -43,8 +43,3 @@ class CharacterLoader(BaseCharacterLoader):
     def create_dict(self) -> dict[CharacterDictKey | str, Character]:
         """Повертає сформований та валідований словник об'єктів персонажів."""
         return self.character_manager.create_dict()
-
-
-if __name__ == "__main__":
-    loader = CharacterLoader()
-    print(loader.create_dict())

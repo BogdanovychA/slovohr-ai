@@ -28,8 +28,3 @@ class GlobalPromptLoader(BaseGlobalPromptLoader):
     def get_prompt(self) -> str:
         """Зчитує та повертає глобальний системний промпт."""
         return self.manager.get_prompt()
-
-
-if __name__ == "__main__":
-    loader = GlobalPromptLoader()
-    print(loader.get_prompt())
