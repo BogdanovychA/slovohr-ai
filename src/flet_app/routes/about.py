@@ -44,7 +44,8 @@ def build_view(page: ft.Page, box: PandorasBox) -> ft.View:
                 height=200,
             ),
             ft.Text(
-                "Мінімалістичний чат-інтерфейс, створений для демонстрації можливостей Lapathoniia",
+                "Мінімалістичний чат-інтерфейс, "
+                "створений для демонстрації можливостей Lapathoniia",
                 size=style.settings.text_size,
             ),
             ft.Text(

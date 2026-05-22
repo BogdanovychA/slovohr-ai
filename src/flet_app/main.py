@@ -1,22 +1,25 @@
 # -*- coding: utf-8 -*-
 
+
+import asyncio
+import logging
+import uuid
+
 import flet as ft
 from flet_storage import FletStorage
+from measurement_api import MeasurementAPI
 
 from abstract.character_loader import CharacterLoader
 from abstract.global_prompt_loader import GlobalPromptLoader
-from config import app, lapathoniia, measurement_api as m9t_config
+from config import app, lapathoniia
+from config import measurement_api as m9t_config
 from core.lapathoniia import Lapathoniia
 from flet_app.routes import about, author, error404, root, settings
 from flet_app.utils import elements, style
 from flet_app.utils import utils as ft_utils
 from flet_app.utils.models import PandorasBox
 from models.character import CharacterDictKey
-from models.logging import Analytics
-from measurement_api import MeasurementAPI
-import uuid
-import logging
-import asyncio
+from models.logging import Analytics, EventName
 
 logger = logging.getLogger(__name__)
 
@@ -74,7 +77,7 @@ async def build_main_view(
 
             await box.m9t.log_event(
                 box.client_id,
-                Analytics.QUERY_SENT,
+                EventName.QUERY_SENT,
                 character=str(prompt_switcher.value),
                 model=box.l9a.model_key,
                 max_tokens=box.l9a.max_tokens,
@@ -101,7 +104,9 @@ async def build_main_view(
         ft_utils.set_attr(answer_block, "disabled", True)
 
     model_block = ft.Text(
-        f"Модель: {box.l9a.model}, температура: {box.l9a.temperature}, токени: {box.l9a.max_tokens}",
+        f"Модель: {box.l9a.model}, "
+        f"температура: {box.l9a.temperature}, "
+        f"токени: {box.l9a.max_tokens}",
     )
 
     def _create_prompt_switcher_options() -> list[ft.DropdownOption]:
@@ -201,7 +206,7 @@ async def main(page: ft.Page):
 
         await box.m9t.log_event(
             box.client_id,
-            Analytics.ROUTE_CHANGE,
+            EventName.ROUTE_CHANGE,
             page_path=page.route,
             platform=box.client_platform,
         )

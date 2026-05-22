@@ -5,10 +5,11 @@ from __future__ import annotations
 from typing import TYPE_CHECKING
 
 if TYPE_CHECKING:
-    from models.character import Character, CharacterDictKey
-    from core.lapathoniia import Lapathoniia
     from flet_storage import FletStorage
     from measurement_api import MeasurementAPI
+
+    from core.lapathoniia import Lapathoniia
+    from models.character import Character, CharacterDictKey
 
 from dataclasses import dataclass
 

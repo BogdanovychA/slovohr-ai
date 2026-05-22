@@ -13,8 +13,10 @@ class LoggingLevel(StrEnum):
     CRITICAL = "CRITICAL"
 
 
-class Analytics(StrEnum):
+class EventName(StrEnum):
     ROUTE_CHANGE = "route_change"
     QUERY_SENT = "query_sent"
 
+
+class Analytics(StrEnum):
     NO_PLATFORM = "no_platform"
