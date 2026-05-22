@@ -16,3 +16,5 @@ class LoggingLevel(StrEnum):
 class Analytics(StrEnum):
     ROUTE_CHANGE = "route_change"
     QUERY_SENT = "query_sent"
+
+    NO_PLATFORM = "no_platform"

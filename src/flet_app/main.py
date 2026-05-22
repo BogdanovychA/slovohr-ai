@@ -79,7 +79,7 @@ async def build_main_view(
                 model=box.l9a.model_key,
                 max_tokens=box.l9a.max_tokens,
                 temperature=box.l9a.temperature,
-                platform=str(page.platform.value),
+                platform=box.client_platform,
             )
 
             ft_utils.set_attr(answer_block, "value", answer)
@@ -203,7 +203,7 @@ async def main(page: ft.Page):
             box.client_id,
             Analytics.ROUTE_CHANGE,
             page_path=page.route,
-            platform=str(page.platform.value),
+            platform=box.client_platform,
         )
 
         page.views.clear()
@@ -240,12 +240,9 @@ async def main(page: ft.Page):
         l9a=Lapathoniia(**lapathoniia.settings.model_dump()),
         characters_dict=character_loader.create_dict(),
         global_prompt=global_prompt_loader.get_prompt(),
-        m9t=MeasurementAPI(
-            m10t_id=m9t_config.settings.id,
-            secret_key=m9t_config.settings.secret_key,
-            debug=m9t_config.settings.debug,
-        ),
+        m9t=MeasurementAPI(**m9t_config.settings.model_dump()),
         client_id="",
+        client_platform=page.platform.value if page.platform else Analytics.NO_PLATFORM,
     )
 
     await asyncio.sleep(0.2)

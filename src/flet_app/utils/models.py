@@ -23,3 +23,4 @@ class PandorasBox:
     global_prompt: str
     m9t: MeasurementAPI
     client_id: str
+    client_platform: str
