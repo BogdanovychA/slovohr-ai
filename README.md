@@ -93,4 +93,4 @@
 
 ## Онлайн-версія
 
-Спробувати роботу застосунку можна на живому демо: [slovohr-ai.bogdanovych.org](https://slovohr-ai.bogdanovych.org/)
+Спробувати роботу застосунку можна на живому демо: [Slovohr-AI.bogdanovych.org](https://slovohr-ai.bogdanovych.org/)
