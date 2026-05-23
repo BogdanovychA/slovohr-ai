@@ -49,8 +49,8 @@ dev = [
 
 [tool.flet]
 desktop_flavor = "light"
-org = "org.foundation101"
-product = "slovohr-ai"
+org = "org.bogdanovych"
+product = "slovohrai"
 company = "Personal"
 copyright = "Copyright (c) 2026 Andrii Bogdanovych"
 
