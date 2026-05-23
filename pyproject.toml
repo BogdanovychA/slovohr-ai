@@ -1,7 +1,7 @@
 [project]
 name = "slovohr-ai"
-version = "0.2.1"
-description = "Slovohr.AI (Словограй) is an interactive Flet-based chat interface featuring configurable historical and fictional Ukrainian characters powered by Lapathoniia LLM provider."
+version = "0.3.0"
+description = "Slovohr.AI is an interactive Flet-based chat interface featuring configurable historical and fictional Ukrainian characters powered by Lapathoniia LLM provider."
 readme = "README.md"
 requires-python = ">=3.12"
 authors = [

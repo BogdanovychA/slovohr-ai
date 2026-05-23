@@ -13,7 +13,7 @@ from abstract.character_loader import CharacterLoader
 from abstract.global_prompt_loader import GlobalPromptLoader
 from config import app, lapathoniia
 from config import measurement_api as m9t_config
-from core.lapathoniia import Lapathoniia
+from core.lapathoniia_stream import LapathoniiaStream
 from flet_app.routes import about, author, error404, root, settings
 from flet_app.utils import elements, style
 from flet_app.utils import utils as ft_utils
@@ -66,6 +66,7 @@ async def build_main_view(
                 return
 
             ft_utils.set_attr(message_block, "value", "Опрацювання запиту...")
+
             ft_utils.set_attr(answer_block, "disabled", True)
 
             custom_system_prompt = box.characters_dict[
@@ -73,7 +74,14 @@ async def build_main_view(
             ].prompt
             final_system_prompt = f"{box.global_prompt}\n\n{custom_system_prompt}"
 
-            answer = await box.l9a.query(final_system_prompt, request_block.value)
+            stream = box.l9a.query(final_system_prompt, request_block.value)
+
+            answer = ""
+            async for chunk in stream:
+                answer += chunk
+                ft_utils.set_attr(answer_block, "value", answer)
+
+            ft_utils.set_attr(answer_block, "disabled", False)
 
             await box.m9t.log_event(
                 box.client_id,
@@ -84,9 +92,6 @@ async def build_main_view(
                 temperature=box.l9a.temperature,
                 platform=box.client_platform,
             )
-
-            ft_utils.set_attr(answer_block, "value", answer)
-            ft_utils.set_attr(answer_block, "disabled", False)
 
             ft_utils.set_attr(message_block, "value", default_message_text)
             ft_utils.set_attr(request_block, "value", "")
@@ -242,7 +247,7 @@ async def main(page: ft.Page):
 
     box = PandorasBox(
         storage=FletStorage(app.settings.name),
-        l9a=Lapathoniia(**lapathoniia.settings.model_dump()),
+        l9a=LapathoniiaStream(**lapathoniia.settings.model_dump()),
         characters_dict=character_loader.create_dict(),
         global_prompt=global_prompt_loader.get_prompt(),
         m9t=MeasurementAPI(**m9t_config.settings.model_dump()),
