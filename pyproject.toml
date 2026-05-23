@@ -1,6 +1,6 @@
 [project]
 name = "slovohr-ai"
-version = "0.3.0"
+version = "0.3.1"
 description = "Slovohr.AI is an interactive Flet-based chat interface featuring configurable historical and fictional Ukrainian characters powered by Lapathoniia LLM provider."
 readme = "README.md"
 requires-python = ">=3.12"
@@ -50,7 +50,7 @@ dev = [
 [tool.flet]
 desktop_flavor = "light"
 org = "org.bogdanovych"
-product = "slovohrai"
+product = "Slovohr.AI"
 company = "Personal"
 copyright = "Copyright (c) 2026 Andrii Bogdanovych"
 

@@ -52,7 +52,17 @@ def build_view(page: ft.Page, box: PandorasBox) -> ft.View:
                 size=style.settings.text_size,
                 spans=[
                     elements.link(
-                        "Slovohr.AI на Github",
+                        "Вебзастосунок",
+                        "https://slovohr-ai.bogdanovych.org/",
+                    ),
+                    ft.TextSpan("\n"),
+                    elements.link(
+                        "Android (Google Play)",
+                        "https://play.google.com/store/apps/details?id=org.bogdanovych.slovohrai",
+                    ),
+                    ft.TextSpan("\n"),
+                    elements.link(
+                        "Github",
                         "https://github.com/BogdanovychA/slovohr-ai",
                     ),
                 ],
