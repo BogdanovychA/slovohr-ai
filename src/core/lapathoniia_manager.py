@@ -14,6 +14,8 @@ logger = logging.getLogger(__name__)
 
 
 class BaseLapathoniia(ABC):
+    """Абстрактний базовий клас для взаємодії з мовними моделями."""
+
     @abstractmethod
     def get_generator(
         self,
@@ -22,11 +24,15 @@ class BaseLapathoniia(ABC):
         temperature: float,
         messages: list,
     ) -> AsyncGenerator[str, None]:
+        """Повертає асинхронний генератор відповідей від ШІ."""
         pass
 
 
 class LapathoniiaStream(BaseLapathoniia):
+    """Клас для роботи з API в режимі потокової передачі відповідей (streaming)."""
+
     def __init__(self, api_key: str, base_url: str):
+        """Ініціалізує клієнт для потокового API."""
         self.client = AsyncOpenAI(api_key=api_key, base_url=base_url)
 
     async def get_generator(
@@ -36,6 +42,7 @@ class LapathoniiaStream(BaseLapathoniia):
         temperature: float,
         messages: list,
     ) -> AsyncGenerator[str, None]:
+        """Отримує відповідь від моделі у вигляді потоку токенів."""
 
         stream = await self.client.chat.completions.create(
             model=model,
@@ -54,7 +61,10 @@ class LapathoniiaStream(BaseLapathoniia):
 
 
 class LapathoniiaChat(BaseLapathoniia):
+    """Клас для роботи з API в режимі стандартного чату (отримання повної відповіді відразу)."""
+
     def __init__(self, api_key: str, base_url: str):
+        """Ініціалізує клієнт для API чату."""
         self.client = AsyncOpenAI(api_key=api_key, base_url=base_url)
 
     async def get_generator(
@@ -64,6 +74,7 @@ class LapathoniiaChat(BaseLapathoniia):
         temperature: float,
         messages: list,
     ) -> AsyncGenerator[str, None]:
+        """Отримує відповідь від моделі повністю та повертає її одним повідомленням."""
 
         response = await self.client.chat.completions.create(
             model=model,
@@ -90,6 +101,7 @@ class LapathoniiaManager:
         model_key: AIModel | str,
         stream: bool = True,
     ) -> None:
+        """Ініціалізує менеджер роботи з моделями та налаштовує параметри генерації."""
 
         self.max_tokens = max_tokens
         self.temperature = temperature

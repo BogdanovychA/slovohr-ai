@@ -37,6 +37,7 @@ async def build_view(
         box.l9a.model_key = model_switcher.value
 
     def _switch_stream():
+        """Оновлює налаштування потокового виведення (стрімінгу)."""
         box.l9a.stream = True if stream_switcher.value == "True" else False
 
     def _change_tokens_block():
