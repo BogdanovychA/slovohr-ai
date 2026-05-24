@@ -91,6 +91,7 @@ async def build_main_view(
                 max_tokens=box.l9a.max_tokens,
                 temperature=box.l9a.temperature,
                 platform=box.client_platform,
+                stream=box.l9a.stream,
             )
 
             ft_utils.set_attr(message_block, "value", default_message_text)
@@ -108,13 +109,12 @@ async def build_main_view(
         ft_utils.set_attr(answer_block, "value", "")
         ft_utils.set_attr(answer_block, "disabled", True)
 
+    stream_mode = "стрімінг" if box.l9a.stream else "чат"
     model_block = ft.Text(
         f"Модель: {box.l9a.model}, "
         f"температура: {box.l9a.temperature}, "
         f"токени: {box.l9a.max_tokens}, "
-        "режим: стрімінг."
-        if box.l9a.stream
-        else "режим: чат."
+        f"режим: {stream_mode}."
     )
 
     def _create_prompt_switcher_options() -> list[ft.DropdownOption]:

@@ -36,6 +36,9 @@ async def build_view(
         """Оновлює ключ використовуваної моделі в налаштуваннях."""
         box.l9a.model_key = model_switcher.value
 
+    def _switch_stream():
+        box.l9a.stream = True if stream_switcher.value == "True" else False
+
     def _change_tokens_block():
         """Оновлює ліміт максимальної кількості токенів
         у налаштуваннях та інтерфейсі.
@@ -91,6 +94,19 @@ async def build_view(
         on_change=_change_tokens_block,
     )
 
+    stream_options_dict = {"True": "Стрімінг", "False": "Чат"}
+
+    stream_switcher = ft.Dropdown(
+        label_style=ft.TextStyle(size=style.settings.text_size),
+        width=250,
+        options=[
+            ft.DropdownOption(key=k, text=v) for k, v in stream_options_dict.items()
+        ],
+        value=str(box.l9a.stream),
+        label="Режим роботи",
+        on_select=_switch_stream,
+    )
+
     page.title = TITLE
 
     return ft.View(
@@ -107,6 +123,8 @@ async def build_view(
             ft.Text(""),
             tokens_block,
             tokens_slider,
+            ft.Text(""),
+            stream_switcher,
             ft.Text(""),
             elements.back_button(page, "Назад"),
         ],
