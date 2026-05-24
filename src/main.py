@@ -16,4 +16,4 @@ logging.getLogger("httpx").setLevel(logging.WARNING)
 logger = logging.getLogger(__name__)
 
 if __name__ == "__main__":
-    ft.run(main, assets_dir=app.settings.assets_dir)
+    ft.run(main, assets_dir=str(app.settings.assets_dir))

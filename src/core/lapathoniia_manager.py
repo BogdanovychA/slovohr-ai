@@ -15,12 +15,12 @@ logger = logging.getLogger(__name__)
 
 class BaseLapathoniia(ABC):
     @abstractmethod
-    async def get_generator(
+    def get_generator(
         self,
         model: str,
         max_tokens: int,
         temperature: float,
-        messages: list[dict[str, str]],
+        messages: list,
     ) -> AsyncGenerator[str, None]:
         pass
 

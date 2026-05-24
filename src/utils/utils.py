@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, Any
 
 if TYPE_CHECKING:
     from pathlib import Path
@@ -34,7 +34,7 @@ def api_timer(func):
     return wrapper
 
 
-def read_yaml_file(file: Path) -> dict[str, str]:
+def read_yaml_file(file: Path) -> dict[str, Any]:
     """Безпечно зчитує YAML-файл та повертає його вміст як словник."""
 
     try:
