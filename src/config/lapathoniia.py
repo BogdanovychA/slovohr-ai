@@ -13,6 +13,7 @@ class Settings(BaseSettings):
     base_url: str = "https://api.lapathoniia.top"
     max_tokens: int = 1000
     temperature: float = 0.7
+    stream: bool = True
 
     models_dict: dict[AIModel, str] = {
         AIModel.MAMAY: "MamayLM-Gemma-3-12B-IT-v1.0",

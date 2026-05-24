@@ -13,7 +13,7 @@ from abstract.character_loader import CharacterLoader
 from abstract.global_prompt_loader import GlobalPromptLoader
 from config import app, lapathoniia
 from config import measurement_api as m9t_config
-from core.lapathoniia_stream import LapathoniiaStream
+from core.lapathoniia_manager import LapathoniiaManager
 from flet_app.routes import about, author, error404, root, settings
 from flet_app.utils import elements, style
 from flet_app.utils import utils as ft_utils
@@ -247,7 +247,7 @@ async def main(page: ft.Page):
 
     box = PandorasBox(
         storage=FletStorage(app.settings.name),
-        l9a=LapathoniiaStream(**lapathoniia.settings.model_dump()),
+        l9a=LapathoniiaManager(**lapathoniia.settings.model_dump()),
         characters_dict=character_loader.create_dict(),
         global_prompt=global_prompt_loader.get_prompt(),
         m9t=MeasurementAPI(**m9t_config.settings.model_dump()),
