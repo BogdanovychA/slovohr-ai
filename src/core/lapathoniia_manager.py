@@ -34,19 +34,16 @@ class LapathoniiaStream(BaseLapathoniia):
         model: str,
         max_tokens: int,
         temperature: float,
-        messages: list[dict[str, str]],
+        messages: list,
     ) -> AsyncGenerator[str, None]:
 
-        stream = cast(  # Щоб PyCharm не сварився :)
-            Any,
-            await self.client.chat.completions.create(
-                model=model,
-                max_tokens=max_tokens,
-                temperature=temperature,
-                stream=True,
-                n=1,
-                messages=messages,
-            ),
+        stream = await self.client.chat.completions.create(
+            model=model,
+            max_tokens=max_tokens,
+            temperature=temperature,
+            stream=True,
+            n=1,
+            messages=messages,
         )
 
         async for chunk in stream:
@@ -65,7 +62,7 @@ class LapathoniiaChat(BaseLapathoniia):
         model: str,
         max_tokens: int,
         temperature: float,
-        messages: list[dict[str, str]],
+        messages: list,
     ) -> AsyncGenerator[str, None]:
 
         response = await self.client.chat.completions.create(
