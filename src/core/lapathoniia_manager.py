@@ -97,9 +97,10 @@ class LapathoniiaManager:
         self.models_dict = models_dict
         self.model_key = model_key
 
-        self.manager_class = LapathoniiaStream if stream else LapathoniiaChat
+        self.stream = stream
 
-        self.manager = self.manager_class(api_key=api_key, base_url=base_url)
+        self.manager_stream = LapathoniiaStream(api_key=api_key, base_url=base_url)
+        self.manager_chat = LapathoniiaChat(api_key=api_key, base_url=base_url)
 
     @property
     def model(self) -> str:
@@ -137,7 +138,9 @@ class LapathoniiaManager:
         )
 
         try:
-            generator = self.manager.get_generator(
+            manager = self.manager_stream if self.stream else self.manager_chat
+
+            generator = manager.get_generator(
                 model=self.model,
                 max_tokens=self.max_tokens,
                 temperature=self.temperature,
