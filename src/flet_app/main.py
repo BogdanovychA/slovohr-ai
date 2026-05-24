@@ -111,7 +111,10 @@ async def build_main_view(
     model_block = ft.Text(
         f"Модель: {box.l9a.model}, "
         f"температура: {box.l9a.temperature}, "
-        f"токени: {box.l9a.max_tokens}",
+        f"токени: {box.l9a.max_tokens}, "
+        "режим: стрімінг."
+        if box.l9a.stream
+        else "режим: чат."
     )
 
     def _create_prompt_switcher_options() -> list[ft.DropdownOption]:
