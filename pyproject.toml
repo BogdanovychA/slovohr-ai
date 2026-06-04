@@ -1,6 +1,6 @@
 [project]
 name = "slovohr-ai"
-version = "0.3.2"
+version = "0.3.3"
 description = "Slovohr.AI is an interactive Flet-based chat interface featuring configurable historical and fictional Ukrainian characters powered by Lapathoniia LLM provider."
 readme = "README.md"
 requires-python = ">=3.12"
@@ -29,9 +29,9 @@ classifiers = [
     "Topic :: Software Development :: User Interfaces",
 ]
 dependencies = [
-    "flet==0.85.1",
+    "flet==0.85.2",
     "flet-storage==1.1.3",
-    "openai==2.38.0",
+    "openai==2.41.0",
     "pydantic==2.13.4",
     "pydantic-settings==2.14.1",
     "pyyaml==6.0.3",
@@ -40,9 +40,9 @@ dependencies = [
 
 [dependency-groups]
 dev = [
-    "flet-cli==0.85.1",
-    "flet-desktop==0.85.1",
-    "flet-web==0.85.1",
+    "flet-cli",
+    "flet-desktop",
+    "flet-web",
     "pre_commit",
     "ruff",
 ]

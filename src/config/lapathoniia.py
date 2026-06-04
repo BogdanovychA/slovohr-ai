@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 
+from pydantic import computed_field
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 from config import app
@@ -15,12 +16,18 @@ class Settings(BaseSettings):
     temperature: float = 0.7
     stream: bool = True
 
-    models_dict: dict[AIModel, str] = {
-        AIModel.MAMAY: "MamayLM-Gemma-3-12B-IT-v1.0",
-        AIModel.LAPA: "LapaLLM-Gemma-3-12B-v0.1.2-instruct",
-    }
-
     model_key: AIModel = AIModel.MAMAY
+
+    lapa: str = ""
+    mamay: str = ""
+
+    @computed_field
+    @property
+    def models_dict(self) -> dict[AIModel, str]:
+        return {
+            AIModel.MAMAY: self.mamay,
+            AIModel.LAPA: self.lapa,
+        }
 
     model_config = SettingsConfigDict(
         env_file=app.settings.env_file,
@@ -30,3 +37,6 @@ class Settings(BaseSettings):
 
 
 settings = Settings()
+
+if __name__ == "__main__":
+    print(settings)

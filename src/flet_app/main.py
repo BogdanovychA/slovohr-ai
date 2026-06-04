@@ -250,7 +250,15 @@ async def main(page: ft.Page):
 
     box = PandorasBox(
         storage=FletStorage(app.settings.name),
-        l9a=LapathoniiaManager(**lapathoniia.settings.model_dump()),
+        l9a=LapathoniiaManager(
+            api_key=lapathoniia.settings.api_key,
+            base_url=lapathoniia.settings.base_url,
+            max_tokens=lapathoniia.settings.max_tokens,
+            temperature=lapathoniia.settings.temperature,
+            models_dict=lapathoniia.settings.models_dict,
+            model_key=lapathoniia.settings.model_key,
+            stream=lapathoniia.settings.stream,
+        ),
         characters_dict=character_loader.create_dict(),
         global_prompt=global_prompt_loader.get_prompt(),
         m9t=MeasurementAPI(**m9t_config.settings.model_dump()),
