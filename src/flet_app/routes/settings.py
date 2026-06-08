@@ -74,9 +74,9 @@ async def build_view(
 
     temperature_slider = ft.Slider(
         width=350,
-        min=0.5,
+        min=0.0,
         max=1.0,
-        divisions=5,
+        divisions=10,
         value=box.l9a.temperature,
         on_change=_change_temperature,
     )
