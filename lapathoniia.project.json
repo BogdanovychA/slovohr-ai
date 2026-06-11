@@ -1,8 +1,8 @@
 {
   "name": "Slovohr.AI (Словограй)",
   "team": "Andrii Bogdanovych",
-  "description_uk": "Інтерактивний чат-інтерфейс, створений для демонстрації можливостей Lapathoniia. Він дозволяє користувачам вести діалог із віртуальними історичними та вигаданими постатями, чиї унікальні характери, манера мовлення та знання гнучко налаштовуються за допомогою системних промптів.",
-  "description_en": "An interactive chat interface designed to showcase the capabilities of Lapathoniia. It enables users to engage in dialogue with virtual historical and fictional characters, whose unique personalities, speech patterns, and knowledge bases are flexibly configured using system prompts.",
+  "description_uk": "Інтерактивний чат-інтерфейс, що дозволяє вести діалог із віртуальними історичними та вигаданими постатями, чиї унікальні характери, манера мовлення та знання гнучко налаштовуються за допомогою системних промптів.",
+  "description_en": "An interactive chat interface that enables dialogue with virtual historical and fictional characters, whose unique personalities, speech patterns, and knowledge bases are flexibly configured using system prompts.",
   "website": "https://apps.bogdanovych.org/app/slovohr-ai",
   "demo": "https://slovohr-ai.bogdanovych.org",
   "github": "https://github.com/BogdanovychA/slovohr-ai",
