@@ -60,6 +60,7 @@ path = "src"
 [project.urls]
 "Homepage" = "https://www.bogdanovych.org"
 "Repository" = "https://github.com/BogdanovychA/slovohr-ai"
+DOI = "https://doi.org/10.5281/zenodo.21156363"
 "Bug Tracker" = "https://github.com/BogdanovychA/slovohr-ai/issues"
 
 [build-system]

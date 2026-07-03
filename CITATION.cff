@@ -9,5 +9,6 @@ abstract: "An interactive Flet-based chat interface featuring configurable histo
 license: MIT
 repository-code: "https://github.com/BogdanovychA/slovohr-ai"
 url: "https://slovohr-ai.bogdanovych.org/"
+doi: 10.5281/zenodo.21156363
 version: 0.3.4
 date-released: 2026-06-11
