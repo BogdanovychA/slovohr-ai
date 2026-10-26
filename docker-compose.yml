@@ -1,14 +1,12 @@
-name: slovohr-ai
-
 services:
-  slovohr-ai:
+  web:
     build:
       context: .
       dockerfile: Dockerfile
     image: flet_slovohr-ai:${APP_VERSION}
     pull_policy: missing
-    container_name: flet_slovohr-ai_app
-    restart: always
+    container_name: slovohr_ai-bogdanovych-org
+    restart: unless-stopped
     env_file:
       - src/assets/.env
     volumes:
@@ -16,3 +14,12 @@ services:
       - ./src/assets/images/persons:/app/src/assets/images/persons
     ports:
       - "8009:8000"
+
+  cloudflared:
+#    image: cloudflare/cloudflared:latest
+    image: cloudflare/cloudflared:2026.7.3
+    container_name: slovohr_ai-bogdanovych-org-cloudflared
+    restart: unless-stopped
+    command: tunnel --no-autoupdate run --token ${CLOUDFLARE__TUNNEL_TOKEN}
+    depends_on:
+      - web
